@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApplication1.ViewModel
+namespace Risk.ViewModel
 {
-    class Class1
+    class MainViewModel
     {
     }
 }
