@@ -1,0 +1,42 @@
+﻿<!-- ISSUE -->
+<r:RibbonWindow x:Class="Topbar.Window" 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+    Title="Window" Height="350" Width="525">
+    <!--
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+    </Grid>
+    -->
+    
+    <r:Ribbon>
+        <!-- Home -->
+        <r:RibbonTab Header="Home" KeyTip="H">
+            <r:RibbonGroup Header="Map">
+                <r:RibbonButton SmallImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/Open.png" Label="Open" KeyTip="O" Command="{Binding OpenCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveCommand}"/>
+            </r:RibbonGroup>
+            <r:RibbonGroup Header="Game">
+                <r:RibbonButton ImageSource="/Images/StartGame.png" Label="Start" KeyTip="P" Command="{Binding PlayGameCommand}"/>
+            </r:RibbonGroup>
+        </r:RibbonTab>
+        <!-- Editor -->
+        <r:RibbonTab Header="Editor" KeyTip="E">
+            <RibbonGroup Header="Copy/Paste">
+                <RibbonButton SmallImageSource="/Images/Cut.png" Label="Cut" KeyTip="X" Command="{Binding CutCommand}" />
+                <RibbonButton SmallImageSource="/Images/Copy.png" Label="Copy" KeyTip="C" Command="{Binding CopyCommand}"/>
+                <RibbonMenuButton SmallImageSource="/Images/Paste.png" Label="Paste" KeyTip="V">
+                    <RibbonMenuItem ImageSource="/Images/Paste.png" Header="Paste" Command="{Binding PasteCommand}"/>
+                    <RibbonMenuItem ImageSource="/Images/Paste.png" Header="Only Shapes" Command="{Binding PasteCommand}"/>
+                    <RibbonMenuItem ImageSource="/Images/Paste.png" Header="Something?" Command="{Binding PasteCommand}"/>
+                </RibbonMenuButton>
+            </RibbonGroup>
+        </r:RibbonTab>
+    </r:Ribbon>
+</r:RibbonWindow>
+
