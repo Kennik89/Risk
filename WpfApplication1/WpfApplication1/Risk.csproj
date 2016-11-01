@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\SidePanel.xaml.cs">
+      <DependentUpon>SidePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Topbar.xaml.cs">
       <DependentUpon>Topbar.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\DummyUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SidePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,6 +156,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\StartGame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\addLand.png" />
+    <Resource Include="Images\addLine.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

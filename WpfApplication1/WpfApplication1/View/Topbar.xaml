@@ -22,20 +22,22 @@
                 <r:RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveCommand}"/>
             </r:RibbonGroup>
             <r:RibbonGroup Header="Game">
-                <r:RibbonButton ImageSource="/Images/StartGame.png" Label="Start" KeyTip="P" Command="{Binding PlayGameCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/StartGame.png" Label="Start" KeyTip="P" Command="{Binding PlayGameCommand}"/><!-- ISSUE -->
             </r:RibbonGroup>
         </r:RibbonTab>
         <!-- Editor -->
         <r:RibbonTab Header="Editor" KeyTip="E">
-            <RibbonGroup Header="Copy/Paste">
-                <RibbonButton SmallImageSource="/Images/Cut.png" Label="Cut" KeyTip="X" Command="{Binding CutCommand}" />
-                <RibbonButton SmallImageSource="/Images/Copy.png" Label="Copy" KeyTip="C" Command="{Binding CopyCommand}"/>
-                <RibbonMenuButton SmallImageSource="/Images/Paste.png" Label="Paste" KeyTip="V">
-                    <RibbonMenuItem ImageSource="/Images/Paste.png" Header="Paste" Command="{Binding PasteCommand}"/>
-                    <RibbonMenuItem ImageSource="/Images/Paste.png" Header="Only Shapes" Command="{Binding PasteCommand}"/>
-                    <RibbonMenuItem ImageSource="/Images/Paste.png" Header="Something?" Command="{Binding PasteCommand}"/>
-                </RibbonMenuButton>
-            </RibbonGroup>
+            <r:RibbonGroup Header="Copy/Paste">
+                <r:RibbonButton SmallImageSource="/Images/Cut.png" Label="Cut" KeyTip="X" Command="{Binding CutCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/Copy.png" Label="Copy" KeyTip="C" Command="{Binding CopyCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/Paste.png" Label="Paste" KeyTip="V" Command="{Binding PasteCommand}">
+                </r:RibbonButton>
+            </r:RibbonGroup>
+            <r:RibbonGroup Header="Elements" KeyTip="C">
+                <r:RibbonButton SmallImageSource="/Images/addLand.png" Label="Country" KeyTip="Q" Command="{Binding addLandCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/addLine.png" Label="Connection" KeyTip="W" Command="{Binding addLineCommand}"/>
+                <r:RibbonButton SmallImageSource="/Images/Delete.png" Label="Delete" KeyTip="E" Command="{Binding DeleteCommand}"/>
+            </r:RibbonGroup>
         </r:RibbonTab>
     </r:Ribbon>
 </r:RibbonWindow>
