@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Risk.View
+namespace Risk.View.UserControl
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for Topbar.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class Topbar : UserControl
     {
-        public Page1()
+        public Topbar()
         {
             InitializeComponent();
         }

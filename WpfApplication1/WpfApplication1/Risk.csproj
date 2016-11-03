@@ -56,10 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\SidePanel.xaml.cs">
-      <DependentUpon>SidePanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Topbar.xaml.cs">
+    <Compile Include="View\UserControl\Topbar.xaml.cs">
       <DependentUpon>Topbar.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MainWindow.xaml">
@@ -78,11 +75,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SidePanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Topbar.xaml">
+    <Page Include="View\UserControl\Topbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
