@@ -3,10 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Risk.View.UserControl"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Ribbon>
-        
+             d:DesignHeight="140" d:DesignWidth="auto">
+    <Ribbon SelectionChanged="Ribbon_SelectionChanged">
+        <!-- 1st fane -->
+        <RibbonTab Header="Home" KeyTip="H">
+            <RibbonGroup Header="File">
+                <RibbonButton SmallImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewDiagramCommand}" />
+                <RibbonButton SmallImageSource="/Images/Open.png" Label="Open" KeyTip="O" Command="{Binding OpenDiagramCommand}"/>
+                <RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveDiagramCommand}"/>
+            </RibbonGroup>
+            <RibbonGroup Header="Game">
+                <RibbonButton LargeImageSource="/Images/StartGame.png" Label="Start game" KeyTip="P" Command="{Binding StartCommand}"/>
+            </RibbonGroup>
+        </RibbonTab>
+        <!-- 2nd fane -->
+        <RibbonTab Header="Editor" KeyTip="E">
+            <RibbonGroup Header="Edit">
+                <RibbonButton LargeImageSource="/Images/Undo.png" Label="Undo" KeyTip="Z" Command="{Binding UndoCommand}" />
+                <RibbonButton LargeImageSource="/Images/Redo.png" Label="Redo" KeyTip="Y" Command="{Binding RedoCommand}" />
+                <RibbonButton SmallImageSource="/Images/Cut.png" Label="Cut" KeyTip="X" Command="{Binding CutCommand}" />
+                <RibbonButton SmallImageSource="/Images/Copy.png" Label="Copy" KeyTip="C" Command="{Binding CopyCommand}"/>
+                <RibbonButton SmallImageSource="/Images/Paste.png" Label="Paste" KeyTip="V" Command="{Binding PasteCommand}" />
+            </RibbonGroup>
+            <RibbonGroup Header="Elements">
+                <RibbonButton LargeImageSource="/Images/addLand.png" Label="Add Country" KeyTip="Q" Command="{Binding AddCountryCommand}"/>
+                <RibbonButton LargeImageSource="/Images/addLine.png" Label="Add Connection" KeyTip="W" Command="{Binding AddLineCommand}"/>
+                <RibbonButton LargeImageSource="/Images/Delete.png" Label="Delete" KeyTip="D" Command="{Binding DeleteCommand}"/>
+            </RibbonGroup>
+        </RibbonTab>
     </Ribbon>
 </UserControl>

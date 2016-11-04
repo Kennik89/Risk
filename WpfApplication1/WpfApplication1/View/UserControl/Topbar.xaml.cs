@@ -18,11 +18,16 @@ namespace Risk.View.UserControl
     /// <summary>
     /// Interaction logic for Topbar.xaml
     /// </summary>
-    public partial class Topbar : UserControl
+    public partial class Topbar : System.Windows.Controls.UserControl
     {
         public Topbar()
         {
             InitializeComponent();
+        }
+
+        private void Ribbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

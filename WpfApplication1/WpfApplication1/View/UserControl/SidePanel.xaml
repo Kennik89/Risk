@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Risk.View.UserControl.SidePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Risk.View.UserControl"
+             mc:Ignorable="d" >
+    <Grid Background="DimGray" Width="120">
+        <StackPanel>
+            <Label>Number Country: #</Label>
+            <Separator></Separator>
+            <Label>Error: None</Label>
+            <Separator/>
+            <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Risk;component/Images/addLand.png"/>
+                </Button.Background>
+            </Button>
+            <Label />
+            <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Risk;component/Images/addLine.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
