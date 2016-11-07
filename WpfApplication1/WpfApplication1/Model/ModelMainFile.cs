@@ -9,4 +9,10 @@ namespace Risk.Model
     class ModelMainFile
     {
     }
+
+    class dataContainer
+    {
+        int x;
+        int y;
+    }
 }
