@@ -18,9 +18,9 @@ namespace Risk.View.UserControl
     /// <summary>
     /// Interaction logic for Canvas.xaml
     /// </summary>
-    public partial class Canvas : System.Windows.Controls.UserControl
+    public partial class EditorWindow : System.Windows.Controls.UserControl
     {
-        public Canvas()
+        public EditorWindow()
         {
             InitializeComponent();
         }

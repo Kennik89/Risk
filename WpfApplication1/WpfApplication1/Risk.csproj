@@ -62,8 +62,8 @@
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControl\Canvas.xaml.cs">
-      <DependentUpon>Canvas.xaml</DependentUpon>
+    <Compile Include="View\UserControl\EditorWindow.xaml.cs">
+      <DependentUpon>EditorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControl\SidePanel.xaml.cs">
       <DependentUpon>SidePanel.xaml</DependentUpon>
@@ -83,7 +83,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControl\Canvas.xaml">
+    <Page Include="View\UserControl\EditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
