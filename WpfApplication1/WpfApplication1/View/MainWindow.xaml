@@ -7,7 +7,7 @@
     
     <DockPanel LastChildFill="True">
         <uc:Topbar DockPanel.Dock="Top"/>
-        <uc:SidePanel DockPanel.Dock="Left" HorizontalAlignment="Left" />
+        <uc:SidePanel DockPanel.Dock="Left" HorizontalAlignment="Left" Loaded="SidePanel_Loaded" />
         <uc:EditorWindow/>
     </DockPanel>
 </Window>

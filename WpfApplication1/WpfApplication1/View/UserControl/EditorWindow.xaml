@@ -23,17 +23,16 @@
     </UserControl.Resources>
 
     <!-- Docking-->
-    <DockPanel>
-        <Canvas DockPanel.Dock="Bottom">
-            <Canvas.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF0080FF"/>
-                    <GradientStop Color="Cyan" Offset="1"/>
-                    <GradientStop Color="#FF00C0FF" Offset="0.506"/>
-                    <GradientStop Color="#FF008BFF" Offset="0.195"/>
-                    <GradientStop Color="#FF00B9FF" Offset="0.82"/>
-                    <GradientStop Color="#FF00D1FF" Offset="0.644"/>
-                </LinearGradientBrush>
+    <Canvas DockPanel.Dock="Bottom">
+        <Canvas.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF0080FF"/>
+                <GradientStop Color="Cyan" Offset="1"/>
+                <GradientStop Color="#FF00C0FF" Offset="0.506"/>
+                <GradientStop Color="#FF008BFF" Offset="0.195"/>
+                <GradientStop Color="#FF00B9FF" Offset="0.82"/>
+                <GradientStop Color="#FF00D1FF" Offset="0.644"/>
+            </LinearGradientBrush>
             </Canvas.Background>
             <!-- Setting a background picture. Should be done by using a binding to an element.-->
             <!--
@@ -55,8 +54,5 @@
                 <!-- <components:DragBehavior></components:DragBehavior>-->
             </i:Interaction.Behaviors>
             <!-- </ContentPresenter>-->
-        </Canvas>
-    </DockPanel>
-
-
+    </Canvas>
 </UserControl>

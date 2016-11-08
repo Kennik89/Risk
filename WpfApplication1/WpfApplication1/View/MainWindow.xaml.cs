@@ -23,5 +23,10 @@ namespace Risk.View
         {
             InitializeComponent();
         }
+
+        private void SidePanel_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
