@@ -55,9 +55,6 @@
                 <!-- <components:DragBehavior></components:DragBehavior>-->
             </i:Interaction.Behaviors>
             <!-- </ContentPresenter>-->
-            <local:CountryButtonEditor Canvas.Left="100" Canvas.Right="100">
-
-            </local:CountryButtonEditor>
         </Canvas>
     </DockPanel>
 
