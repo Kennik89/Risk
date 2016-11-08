@@ -24,5 +24,16 @@ namespace Risk.View.UserControl
         {
             InitializeComponent();
         }
+
+        private void CountryButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            CountryButtonEditor CB = sender as CountryButtonEditor;
+            if (CB != null && e.LeftButton == MouseButtonState.Pressed)
+            {
+                /*DragDrop.DoDragDrop(CB,
+                                     CB.Fill.ToString(),
+                                     DragDropEffects.Copy);*/
+            }
+        }
     }
 }

@@ -23,6 +23,11 @@ namespace Risk.View.UserControl
         public CountryButtonEditor()
         {
             InitializeComponent();
+        
+        }
+        public void Button_Click(Object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

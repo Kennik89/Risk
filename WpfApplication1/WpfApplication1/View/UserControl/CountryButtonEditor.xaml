@@ -6,12 +6,37 @@
              xmlns:local="clr-namespace:Risk.View.UserControl"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="30">
-    <Grid Margin="0,0,-86.6,-103.6">
-        <Button Content="Knap"
+    <DockPanel LastChildFill="True" Margin="0,0,-86,-103.6" AllowDrop="True">
+        <DockPanel.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Blue"/>
+                <!--<GradientStop Color="Blue" Offset="0.5"/>
+                <GradientStop Color="#FF00C0FF" Offset="0.506"/>
+                <GradientStop Color="#FF008BFF" Offset="0.195"/>
+                <GradientStop Color="#FF00B9FF" Offset="0.82"/>
+                <GradientStop Color="#FF00D1FF" Offset="0.644"/>-->
+            </LinearGradientBrush>
+
+
+
+            <!--<ImageBrush ImageSource="/Images/RiskMapDummy.png"/>-->
+        </DockPanel.Background>
+
+        <Button Content="Button"
+        Background="Blue"
+        BorderBrush="Red"
+        AllowDrop="True"
+        BorderThickness="10"
+		Click="Button_Click"/>
+        <!--This only colours the background for the button to be visible.-->
+
+
+
+        <!--<Button Content="Knap"
 		HorizontalAlignment="Left"
 		Margin="23,49,0,0"
 		VerticalAlignment="Top"
 		Width="75"
-		Click="Button_Click"/>
-    </Grid>
+		Click="Button_Click"/>-->
+    </DockPanel>
 </UserControl>

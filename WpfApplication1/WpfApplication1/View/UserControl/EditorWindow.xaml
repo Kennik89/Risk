@@ -31,8 +31,8 @@
                 <ImageBrush ImageSource="/Images/RiskMapDummy.png"/>
             </Canvas.Background>
             -->
-            
-<!--            <ContentPresenter Content="{Binding Content}" OpacityMask="Black" Canvas.Left="1" Canvas.Top="1" Height="160" RenderTransformOrigin="0.5,0.5" Width="300"   >
+
+            <!--            <ContentPresenter Content="{Binding Content}" OpacityMask="Black" Canvas.Left="1" Canvas.Top="1" Height="160" RenderTransformOrigin="0.5,0.5" Width="300"   >
                 <ContentPresenter.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1" ScaleX="-1"/>
@@ -41,12 +41,16 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </ContentPresenter.RenderTransform>-->
-                <i:Interaction.Behaviors>
-                    <!-- <components:DragBehavior></components:DragBehavior>-->
-                </i:Interaction.Behaviors>
-           <!-- </ContentPresenter>-->
-            <local:CountryButtonEditor Canvas.Left="100" Canvas.Right="100">
-                
+            <i:Interaction.Behaviors>
+                <!-- <components:DragBehavior></components:DragBehavior>-->
+            </i:Interaction.Behaviors>
+            <!-- </ContentPresenter>. Allowing drag and drop as in https://msdn.microsoft.com/en-us/library/ms742859(v=vs.110).aspx-->
+            <local:CountryButtonEditor Canvas.Left="100" Canvas.Right="100" AllowDrop="True"
+                      MouseMove="CountryButton_MouseMove"
+                      GiveFeedback="CountryButton_GiveFeedback"
+                      DragEnter="CountryButton_DragEnter" DragLeave="CountryButton_DragLeave"
+                      DragOver="CountryButton_DragOver" Drop="CountryButton_Drop">
+
             </local:CountryButtonEditor>
         </Canvas>
     </DockPanel>
