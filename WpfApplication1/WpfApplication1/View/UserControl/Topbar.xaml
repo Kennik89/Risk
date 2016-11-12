@@ -6,8 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="140" d:DesignWidth="auto">
 
-    <Ribbon SelectionChanged="Ribbon_SelectionChanged">
-        <RibbonApplicationMenu></RibbonApplicationMenu>
+    <Ribbon>
         <!-- 1st fane -->
         <RibbonTab Header="Home" KeyTip="H">
             <RibbonGroup Header="File">
