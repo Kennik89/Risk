@@ -11,14 +11,18 @@
 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    
 
     <!-- Defining datatypes and resources-->
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type model:dataContainer}">
-                <Rectangle Width="50" Height="50" Fill="Green"></Rectangle>
+            <DataTemplate DataType="{x:Type model:Shape}">
+                
+                <!--DataType="{x:Type model:dataContainer}">-->
+                <Viewbox:ShapeUserControl/>
             </DataTemplate>
+            
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -54,5 +58,7 @@
                 <!-- <components:DragBehavior></components:DragBehavior>-->
             </i:Interaction.Behaviors>
             <!-- </ContentPresenter>-->
-    </Canvas>
+        
+        <!--<ItemsControl ItemsSource="{Binding Shapes}"/>-->
+         </Canvas>
 </UserControl>

@@ -78,6 +78,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Shape.cs" />
+    <Compile Include="Model\NotifyBase.cs" />
     <Compile Include="ViewModel\Class1.cs" />
     <Compile Include="ViewModel\Country\CountryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

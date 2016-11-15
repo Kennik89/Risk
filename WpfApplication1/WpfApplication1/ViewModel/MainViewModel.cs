@@ -1,4 +1,17 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using Risk.Model;
 
 namespace Risk.ViewModel
 {
@@ -16,12 +29,17 @@ namespace Risk.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        public ObservableCollection<Shape> Shapes { get; set; }
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
             ////if (IsInDesignMode)
+            Shapes = new ObservableCollection<Shape>() {
+                new Shape() { X = 30, Y = 40, Width = 80, Height = 80 },
+                new Shape() { X = 140, Y = 230, Width = 100, Height = 100 }
+            };
             ////{
             ////    // Code runs in Blend --> create design time data.
             ////}
