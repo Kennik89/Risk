@@ -18,9 +18,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
-                
+                <Canvas>
+                    <Ellipse Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green"></Ellipse>
+                </Canvas>
                 <!--DataType="{x:Type model:dataContainer}">-->
-                <Viewbox:ShapeUserControl/>
+                <!-- <Viewbox:ShapeUserControl/>-->
             </DataTemplate>
             
         </ResourceDictionary>
@@ -39,7 +41,7 @@
             </LinearGradientBrush>
             </Canvas.Background>
             <!-- Setting a background picture. Should be done by using a binding to an element.-->
-            <!--
+        <!--
             <Canvas.Background>
                 <ImageBrush ImageSource="/Images/RiskMapDummy.png"/>
             </Canvas.Background>
@@ -58,7 +60,9 @@
                 <!-- <components:DragBehavior></components:DragBehavior>-->
             </i:Interaction.Behaviors>
             <!-- </ContentPresenter>-->
+
         
-        <!--<ItemsControl ItemsSource="{Binding Shapes}"/>-->
-         </Canvas>
+        <!--Lowest element, SHAPES-->
+        <ItemsControl ItemsSource="{Binding Shapes}"/>
+    </Canvas>
 </UserControl>

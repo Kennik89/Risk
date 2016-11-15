@@ -37,8 +37,8 @@ namespace Risk.ViewModel
         {
             ////if (IsInDesignMode)
             Shapes = new ObservableCollection<Shape>() {
-                new Shape() { X = 30, Y = 40, Width = 80, Height = 80 },
-                new Shape() { X = 140, Y = 230, Width = 100, Height = 100 }
+                new Shape() { X = 0, Y = 0, Width = 80, Height = 80 },
+                new Shape() { X = 20, Y = 20, Width = 100, Height = 100 }
             };
             ////{
             ////    // Code runs in Blend --> create design time data.
