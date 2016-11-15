@@ -15,14 +15,15 @@
         <uc:Topbar DockPanel.Dock="Top"/>
         <uc:SidePanel DockPanel.Dock="Left" HorizontalAlignment="Left" Loaded="SidePanel_Loaded" />
         <uc:EditorWindow/>
+      
 
         <!-- DATA BINDING -->
-        <ItemsControl ItemsSource="{Binding Lines}">
+        <!--<ItemsControl ItemsSource="{Binding Lines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        </ItemsControl>-->
     </DockPanel>
 </Window>
