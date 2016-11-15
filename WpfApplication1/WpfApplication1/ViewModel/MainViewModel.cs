@@ -32,9 +32,11 @@ namespace Risk.ViewModel
     { 
         private UndoRedoController undoRedoController = UndoRedoController.Instance;
     
-        public ObservableCollection<Shape> Shapes { get; set; }
-        //public ObservableCollection<Line> Lines { get; set; }
-
+        /*
+         * public ObservableCollection<Shape> Shapes { get; set; }
+        /*
+         * public ObservableCollection<Line> Lines { get; set; }
+        */
         // Commands that the UI can be bound to.
         // These are read-only properties that can only be set in the constructor.
         public ICommand UndoCommand { get; }
@@ -50,14 +52,16 @@ namespace Risk.ViewModel
         {
             // Here the list of Shapes is filled with 2 Nodes. 
             // The "new Type() { prop1 = value1, prop2 = value }" syntax is called an Object Initializer, which creates an object and sets its values.
-         
+
             // Also a constructor could be created for the Shape class that takes the parameters (X, Y, Width and Height), 
             //  and the following could be done:
             // new Shape(30, 40, 80, 80);
-            Shapes = new ObservableCollection<Shape>() {
-                new Shape() { X = 30, Y = 40, Width = 80, Height = 80 },
-                new Shape() { X = 140, Y = 230, Width = 100, Height = 100 }
-            };
+            /*
+             * Shapes = new ObservableCollection<Shape>() {
+             *     new Shape() { X = 30, Y = 40, Width = 80, Height = 80 },
+             *     new Shape() { X = 140, Y = 230, Width = 100, Height = 100 }
+             * };
+             */
             // Here the list of Lines i filled with 1 Line that connects the 2 Shapes in the Shapes collection.
             // ElementAt() is an Extension Method, that like many others can be used on all types of collections.
             // It works just like the "Shapes[0]" syntax would be used for arrays.
