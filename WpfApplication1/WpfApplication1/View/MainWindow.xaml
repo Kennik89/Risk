@@ -4,7 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:uc="clr-namespace:Risk.View.UserControl"
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
-
     <DockPanel LastChildFill="True">
         <uc:Topbar DockPanel.Dock="Top"/>
         <uc:SidePanel DockPanel.Dock="Left" HorizontalAlignment="Left" />
