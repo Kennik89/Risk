@@ -33,30 +33,9 @@ namespace Risk.ViewModel
         public ObservableCollection<Shape> Shapes { get; set; }
 
         public ObservableCollection<Line> Lines { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel()
-        {
-            ////if (IsInDesignMode)
-            Shapes = new ObservableCollection<Shape>() {
-                new Shape() { X = 0, Y = 0, Width = 80, Height = 80 },
-                new Shape() { X = 200, Y = 200, Width = 100, Height = 100 }
-            };
-            Lines = new ObservableCollection<Line>() {
-                new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
-            };
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-        }
-    { 
+
         private UndoRedoController undoRedoController = UndoRedoController.Instance;
-    
+
         /*
          * public ObservableCollection<Shape> Shapes { get; set; }
         /*
@@ -72,9 +51,21 @@ namespace Risk.ViewModel
         public ICommand RemoveShapeCommand { get; }
         public ICommand AddLineCommand { get; }
         public ICommand RemoveLinesCommand { get; }
-
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class.
+        /// </summary>
         public MainViewModel()
         {
+            ////if (IsInDesignMode)
+
+            Shapes = new ObservableCollection<Shape>() {
+                new Shape() { X = 0, Y = 0, Width = 80, Height = 80 },
+                new Shape() { X = 200, Y = 200, Width = 100, Height = 100 }
+            };
+            Lines = new ObservableCollection<Line>() {
+                new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
+            };
+
             // Here the list of Shapes is filled with 2 Nodes. 
             // The "new Type() { prop1 = value1, prop2 = value }" syntax is called an Object Initializer, which creates an object and sets its values.
 
@@ -114,8 +105,19 @@ namespace Risk.ViewModel
              * MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
              * MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
              * MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
-             */    
-    }
+             */
+            ////{
+
+            ////    // Code runs in Blend --> create design time data.
+            ////}
+            ////else
+            ////{
+            ////    // Code runs "for real"
+            ////}
+        }
+      
+    
+    
 
     }
 }
