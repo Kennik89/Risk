@@ -30,6 +30,8 @@ namespace Risk.ViewModel
     public class MainViewModel : ViewModelBase
     {
         public ObservableCollection<Shape> Shapes { get; set; }
+
+        public ObservableCollection<Line> Lines { get; set; }
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -38,7 +40,10 @@ namespace Risk.ViewModel
             ////if (IsInDesignMode)
             Shapes = new ObservableCollection<Shape>() {
                 new Shape() { X = 0, Y = 0, Width = 80, Height = 80 },
-                new Shape() { X = 20, Y = 20, Width = 100, Height = 100 }
+                new Shape() { X = 200, Y = 200, Width = 100, Height = 100 }
+            };
+            Lines = new ObservableCollection<Line>() {
+                new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
             };
             ////{
             ////    // Code runs in Blend --> create design time data.

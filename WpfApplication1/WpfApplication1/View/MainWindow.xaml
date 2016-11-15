@@ -18,12 +18,12 @@
       
 
         <!-- DATA BINDING -->
-        <ItemsControl ItemsSource="{Binding Lines}">
+        <!--<ItemsControl ItemsSource="{Binding Lines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        </ItemsControl>-->
     </DockPanel>
 </Window>
