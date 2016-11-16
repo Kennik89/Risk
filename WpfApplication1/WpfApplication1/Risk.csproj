@@ -86,6 +86,9 @@
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControl\CountryButton.xaml.cs">
+      <DependentUpon>CountryButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControl\EditorWindow.xaml.cs">
       <DependentUpon>EditorWindow.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControl\CountryButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
