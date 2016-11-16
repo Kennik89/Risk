@@ -151,10 +151,14 @@ namespace Risk.Model
 
         // Constructor.
         // The constructor is in this case used to set the default values for the properties.
-        public Shape()
+        public Shape(double posX, double posY, double posHeight, double posWidth)
         {
             // This just means that the integer field called counter is incremented before its value is used to set the Number integer property.
             Number = ++counter;
+            this.X = posX;
+            this.Y = posY;
+            this.Height = posHeight;
+            this.Width = posWidth;
         }
 
         // By overwriting the ToString() method, the default representation of the class is changed from the full namespace (Java: package) name, 

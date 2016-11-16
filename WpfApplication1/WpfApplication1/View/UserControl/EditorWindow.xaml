@@ -19,7 +19,7 @@
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
                 <Canvas>
-                    <Ellipse Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green"></Ellipse>
+                    <Rectangle Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green"></Rectangle>
                 </Canvas>
                 <!--DataType="{x:Type model:dataContainer}">-->
                 <!-- <Viewbox:ShapeUserControl/>-->
