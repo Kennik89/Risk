@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\NotifyBase.cs" />
     <Compile Include="ViewModel\Class1.cs" />
