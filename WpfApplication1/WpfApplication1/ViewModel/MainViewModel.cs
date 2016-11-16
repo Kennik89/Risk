@@ -59,11 +59,11 @@ namespace Risk.ViewModel
             ////if (IsInDesignMode)
 
             Shapes = new ObservableCollection<Shape>() {
-                new Shape() { X = 0, Y = 0, Width = 80, Height = 80 },
-                new Shape() { X = 200, Y = 200, Width = 100, Height = 100 }
+                //new Shape() { X = 400, Y = 400, Width = 80, Height = 80 },
+               //new Shape() { X = 250, Y = 250, Width = 100, Height = 100 }
             };
-            Lines = new ObservableCollection<Line>() {
-                new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
+            Lines = new ObservableCollection<Line>() { 
+              //  new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
             };
 
             // Here the list of Shapes is filled with 2 Nodes. 
@@ -93,9 +93,9 @@ namespace Risk.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
-            /*
-             * AddShapeCommand = new RelayCommand(AddShape);
-             * RemoveShapeCommand = new RelayCommand<IList>(RemoveShape, CanRemoveShape);
+            
+              AddShapeCommand = new RelayCommand(AddShape);
+             /* RemoveShapeCommand = new RelayCommand<IList>(RemoveShape, CanRemoveShape);
              * AddLineCommand = new RelayCommand(AddLine);
              * RemoveLinesCommand = new RelayCommand<IList>(RemoveLines, CanRemoveLines);
              */
@@ -115,9 +115,16 @@ namespace Risk.ViewModel
             ////    // Code runs "for real"
             ////}
         }
-      
-    
-    
 
+        private void AddShape()
+        {
+            Random rand = new Random();
+            undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape(rand.Next(0,500), rand.Next(0,1000), 50, 50)));
+            //undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape(100,100,100,100)));
+            //undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
+            //Shapes[0].X = 3;
+
+
+        }
     }
 }

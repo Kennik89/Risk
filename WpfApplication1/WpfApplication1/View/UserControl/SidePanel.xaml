@@ -11,7 +11,7 @@
             <Separator></Separator>
             <Label>Error: None</Label>
             <Separator/>
-            <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5" >
+            <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5" Command="{Binding AddShapeCommand}">
                 <Button.Background>
                     <ImageBrush ImageSource="/Risk;component/Images/addLand.png"/>
                 </Button.Background>

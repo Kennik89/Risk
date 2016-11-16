@@ -28,7 +28,7 @@
                 <RibbonButton SmallImageSource="/Images/Paste.png" Label="Paste" KeyTip="V" Command="{Binding PasteCommand}" />
             </RibbonGroup>
             <RibbonGroup Header="Elements">
-                <RibbonButton LargeImageSource="/Images/addLand.png" Label="Add Country" KeyTip="Q" Command="{Binding AddCountryCommand}"/>
+                <RibbonButton LargeImageSource="/Images/addLand.png" Label="Add Country" KeyTip="Q" Command="{Binding AddShapeCommand}"/>
                 <RibbonButton LargeImageSource="/Images/addLine.png" Label="Add Connection" KeyTip="W" Command="{Binding AddLineCommand}"/>
                 <RibbonButton LargeImageSource="/Images/Delete.png" Label="Delete" KeyTip="D" Command="{Binding DeleteCommand}"/>
             </RibbonGroup>
