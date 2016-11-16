@@ -18,6 +18,12 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
+                <!--<Canvas>
+                <Rectangle Width="{Binding Width}" Height="{Binding Width}" Fill="Green"
+                          Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" >
+                    
+                </Rectangle>
+                </Canvas>-->
                 <local:CountryButton>
 
                 </local:CountryButton>

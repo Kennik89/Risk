@@ -34,6 +34,9 @@ namespace Risk.View.UserControl
         private void CountryButton_MouseLeftButtonDown(object sender,//Hvad sker der, hvis der trykkes
             MouseButtonEventArgs e){
 
+            Button b = (Button)sender;
+            Canvas c = b.Parent;
+
             isDragging = true;
 
             //throw new System.Exception("Button click");//Tests if event is thrown
@@ -58,7 +61,7 @@ namespace Risk.View.UserControl
         {
             if (isDragging)
             {
-                throw new Exception();
+                //throw new Exception();
             }
             return;
         }

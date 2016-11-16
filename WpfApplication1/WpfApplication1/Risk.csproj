@@ -78,9 +78,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddShapeCommand.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\NotifyBase.cs" />
+    <Compile Include="Command\IUndoRedoCommand.cs" />
+    <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="ViewModel\Class1.cs" />
     <Compile Include="ViewModel\Country\CountryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
