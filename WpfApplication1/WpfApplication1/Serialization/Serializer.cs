@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
+using Risk.Command;
 using Risk.Model;
 
 namespace Risk.Serialization
@@ -13,11 +15,8 @@ namespace Risk.Serialization
         static void Serialize()
         {
             // Create a hashtable of values that will eventually be serialized.
-            Shape shapes = new Shape(50, 50, 50, 50) {};
+            ObservableCollection<Shape> Shapes = new ObservableCollection<Shape>();
 
-            // To serialize the hashtable (and its key/value pairs), 
-            // you must first open a stream for writing.
-            // Use a file stream here.
             FileStream fs = new FileStream("DataFile.soap", FileMode.Create);
 
             // Construct a SoapFormatter and use it 
@@ -25,7 +24,7 @@ namespace Risk.Serialization
             SoapFormatter formatter = new SoapFormatter();
             try
             {
-                formatter.Serialize(fs, shapes);
+                formatter.Serialize(fs, Shapes);
             }
             catch (SerializationException e)
             {
