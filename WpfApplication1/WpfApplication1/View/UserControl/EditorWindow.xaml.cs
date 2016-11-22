@@ -24,5 +24,20 @@ namespace Risk.View.UserControl
         {
             InitializeComponent();
         }
+
+        private void Button_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void Canvas_Drop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void Canvas_DragOver(object sender, DragEventArgs e)
+        {
+
+        }
     }
 }
