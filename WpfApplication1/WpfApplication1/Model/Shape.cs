@@ -9,7 +9,9 @@ namespace Risk.Model
 {
     public class Shape : NotifyBase
     {
+
         private static int counter = 0;
+
 
         public int Number { get; }
 
