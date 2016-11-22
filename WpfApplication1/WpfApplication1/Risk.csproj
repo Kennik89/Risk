@@ -79,16 +79,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddShapeCommand.cs" />
+    <Compile Include="Command\AddLineCommand.cs" />
+    <Compile Include="Command\RemoveLinesCommand.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\NotifyBase.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
-    <Compile Include="ViewModel\Class1.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\Country\CountryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControl\CountryButton.xaml.cs">
+      <DependentUpon>CountryButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControl\EditorWindow.xaml.cs">
       <DependentUpon>EditorWindow.xaml</DependentUpon>
@@ -108,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControl\CountryButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
