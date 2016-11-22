@@ -24,10 +24,5 @@ namespace Risk.View.UserControl
         {
             InitializeComponent();
         }
-
-        private void Ribbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
