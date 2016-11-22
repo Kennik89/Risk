@@ -79,6 +79,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddShapeCommand.cs" />
+    <Compile Include="Command\AddLineCommand.cs" />
+    <Compile Include="Command\RemoveLinesCommand.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Model\NotifyBase.cs" />

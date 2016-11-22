@@ -8,6 +8,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Risk.View.UserControl"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -19,14 +20,27 @@
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
                 <Canvas>
-                    <Rectangle Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green"></Rectangle>
+                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseMove">
+                                <cmd:EventToCommand Command="{Binding DataContext.MouseMoveShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseUp">
+                                <cmd:EventToCommand Command="{Binding DataContext.MouseUpShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                    </Rectangle>
                 </Canvas>
                 <!--DataType="{x:Type model:dataContainer}">-->
                 <!-- <Viewbox:ShapeUserControl/>-->
             </DataTemplate>
             <DataTemplate DataType="{x:Type model:Line}">
                 <Canvas>
-                    <Line Stroke="Red" X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10"/>
+                    <Line Stroke="Black" X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10" StrokeDashArray="2 1"/>
                 </Canvas>
                 <!--DataType="{x:Type model:dataContainer}">-->
                 <!-- <Viewbox:ShapeUserControl/>-->

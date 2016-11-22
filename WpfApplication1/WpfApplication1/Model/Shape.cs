@@ -12,7 +12,7 @@ namespace Risk.Model
     {
         // For a description of the Getter/Setter Property syntax ("{ get { ... } set { ... } }") see the Line class.
         // The static integer counter field is used to set the integer Number property to a unique number for each Shape object.
-        private static int counter = 0;
+        private static int counter = 0; 
 
         // The Number integer property holds a unique integer for each Shape object to identify them in the View (GUI) layer.
         // The "{ get; }" syntax describes that a private field 

@@ -17,7 +17,7 @@
                 </Button.Background>
             </Button>
             <Label />
-            <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5">
+            <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5" Command="{Binding AddLineCommand}">
                 <Button.Background>
                     <ImageBrush ImageSource="/Risk;component/Images/addLine.png"/>
                 </Button.Background>
