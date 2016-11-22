@@ -36,7 +36,8 @@ namespace Risk.Model
         //    NotifyPropertyChanged();
         //    NotifyPropertyChanged("CanvasCenterX");
         //  }
-        public double X { get { return x; } set { x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); } }
+        public double X { get { return x; } set { x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX);
+            } }
 
         private double y = 200;
         // The reason no string is given to the 'NotifyPropertyChanged' method is because, 
