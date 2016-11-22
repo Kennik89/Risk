@@ -120,14 +120,14 @@ namespace Risk.View.UserControl
             {
                 var screenpos = e.GetPosition(this);//This may be unsafe according to msdn.
                 //var pos = c.PointFromScreen(screenpos);
-    
+                Canvas c = (Canvas)this.Parent;
                 //TODO Make boolean check of bounds.
                 //TODO Make the grabbing of the point on the object that there is being dragged (Offset).
 
+                
+
                 X = screenpos.X;
                 Y = screenpos.Y;
-                Canvas.SetLeft(this, X);
-                Canvas.SetBottom(this, Y);
                 e.Handled = true;//Trace works, values are set. Must be set to actual object.
             }
             return;
