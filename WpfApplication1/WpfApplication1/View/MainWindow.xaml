@@ -7,15 +7,10 @@
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
-        <viewModel:MainViewModel></viewModel:MainViewModel>
+        <viewModel:MainViewModel />
     </Window.DataContext>
 
-
     <DockPanel LastChildFill="True">
-        <TextBlock Text="{Binding Source={x:Static SystemParameters.FullPrimaryScreenHeight}}" />
-        <TextBlock Text="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" />
-        <TextBlock Text="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}}" />
-        <TextBlock Text="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}}" />
         <!-- LAYOUT -->
         <uc:Topbar DockPanel.Dock="Top"/>
         <uc:SidePanel DockPanel.Dock="Left" HorizontalAlignment="Left" Loaded="SidePanel_Loaded" />
