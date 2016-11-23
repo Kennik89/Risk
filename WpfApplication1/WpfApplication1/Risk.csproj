@@ -212,7 +212,6 @@
     <Resource Include="Images\RiskMapDummy.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UndoRedo\" />
     <Folder Include="ViewModel\Line\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
