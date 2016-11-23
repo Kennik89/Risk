@@ -14,7 +14,7 @@
         <!-- LAYOUT -->
         <uc:Topbar DockPanel.Dock="Top"/>
         <uc:SidePanel DockPanel.Dock="Left" HorizontalAlignment="Left" Loaded="SidePanel_Loaded" />
-        <uc:EditorWindow/>
+        <uc:EditorWindow Loaded="EditorWindow_Loaded"/>
       
 
         <!-- DATA BINDING -->

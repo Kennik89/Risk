@@ -82,6 +82,7 @@ namespace Risk.View.UserControl
             isDragging = true;
 
             currentTarget = (Risk.Model.Shape)(((FrameworkElement)e.MouseDevice.Target).DataContext);
+
             //As inspired by the following:
             /*
             // Here the visual element that the mouse is captured by is retrieved.
@@ -133,5 +134,14 @@ namespace Risk.View.UserControl
             return;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
