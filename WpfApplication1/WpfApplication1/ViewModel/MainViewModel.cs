@@ -41,17 +41,27 @@ namespace Risk.ViewModel
 
         /*  MAP FUNCTIONALITIES */
         public ICommand AddShapeCommand { get; }
-        public ICommand RemoveShapeCommand { get; }
         public ICommand AddLineCommand { get; }
-        public ICommand RemoveLinesCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         /*  MOUSE CONTROLLER    */
         public ICommand MouseDownShapeCommand { get; }
         public ICommand MouseMoveShapeCommand { get; }
         public ICommand MouseUpShapeCommand { get; }
 
-        /*  FILE CONTROLLER */
+        /*  FILE MENU CONTROLLER */
+        public ICommand NewMapCommand { get; }
+        public ICommand LoadMapCommand { get; }
         public ICommand SaveMapCommand { get; }
+        public ICommand ExitCommand { get; }
+
+        /*  GAME CONTROLLER */
+        public ICommand StartCommand { get; }
+
+        /* EDIT CONTROLLER */
+        public ICommand CutCommand { get; }
+        public ICommand CopyCommand { get; }
+        public ICommand PasteCommand { get; }                                                                
 
         public MainViewModel()
         {
@@ -64,8 +74,8 @@ namespace Risk.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             AddShapeCommand = new RelayCommand(AddShape);
-            // RemoveShapeCommand = new RelayCommand<IList>(RemoveShape, CanRemoveShape);
             AddLineCommand = new RelayCommand(AddLine);
+            DeleteCommand = new RelayCommand(Delete);
             //RemoveLinesCommand = new RelayCommand<IList>(RemoveLines, CanRemoveLines);
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
@@ -80,10 +90,54 @@ namespace Risk.ViewModel
             //MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
 
+            NewMapCommand = new RelayCommand(NewMap);
+            LoadMapCommand = new RelayCommand(LoadMap);
             SaveMapCommand = new RelayCommand(SaveMap);
+            ExitCommand = new RelayCommand(Exit);
+            StartCommand= new RelayCommand(StartMap);
+            CutCommand = new RelayCommand(Cut);
+            CopyCommand = new RelayCommand(Copy);
+            PasteCommand = new RelayCommand(Paste);
+        }
+
+        private void NewMap()
+        {
+            Lines.Clear();
+            Shapes.Clear();
+            undoRedoController.Clear();
+        }
+
+        private void LoadMap()
+        {
+            throw new NotImplementedException();
         }
 
         private void SaveMap()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Exit()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StartMap()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Cut()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Copy()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Paste()
         {
             throw new NotImplementedException();
         }
@@ -102,6 +156,11 @@ namespace Risk.ViewModel
             //undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
             //Shapes[0].X = 3;
         }
+        private void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
         private Line TargetLine(MouseEventArgs e)
         {
             // Here the visual element that the mouse is captured by is retrieved.
@@ -175,4 +234,3 @@ namespace Risk.ViewModel
         }
     }
 }
-
