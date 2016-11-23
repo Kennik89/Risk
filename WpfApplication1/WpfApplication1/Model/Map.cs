@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Risk.Model
 {
-    class Diagram
+    public class Map
     {
-        public List<Shape> Shapes { get; set; }
-        public List<Line> Lines { get; set; }
+        public List<Shape> countries { get; set; }
+        public List<Line> connections { get; set; }
     }
 }
