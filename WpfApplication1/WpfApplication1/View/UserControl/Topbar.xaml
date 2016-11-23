@@ -16,9 +16,9 @@
         <!-- 1st fane -->
         <RibbonTab Header="Home" KeyTip="H">
             <RibbonGroup Header="File">
-                <RibbonButton SmallImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewDiagramCommand}" />
-                <RibbonButton SmallImageSource="/Images/Open.png" Label="Open" KeyTip="O" Command="{Binding OpenDiagramCommand}"/>
-                <RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveDiagramCommand}"/>
+                <RibbonButton SmallImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewMapCommand}" />
+                <RibbonButton SmallImageSource="/Images/Open.png" Label="Open" KeyTip="O" Command="{Binding OpenMapCommand}"/>
+                <RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveMapCommand}"/>
             </RibbonGroup>
             <RibbonGroup Header="Game">
                 <RibbonButton LargeImageSource="/Images/StartGame.png" Label="Start game" KeyTip="P" Command="{Binding StartCommand}"/>

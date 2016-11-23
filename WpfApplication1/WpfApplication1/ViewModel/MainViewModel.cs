@@ -34,19 +34,22 @@ namespace Risk.ViewModel
         // Saves the initial point that the shape has during a move operation.
         private Point initialShapePosition;
 
+        /*  UNDO/REDO   */
         public ICommand UndoCommand { get; }
         public ICommand RedoCommand { get; }
 
-
+        /*  MAP FUNCTIONALITIES */
         public ICommand AddShapeCommand { get; }
         public ICommand RemoveShapeCommand { get; }
         public ICommand AddLineCommand { get; }
         public ICommand RemoveLinesCommand { get; }
 
+        /*  MOUSE CONTROLLER    */
         public ICommand MouseDownShapeCommand { get; }
         public ICommand MouseMoveShapeCommand { get; }
         public ICommand MouseUpShapeCommand { get; }
 
+        /*  FILE CONTROLLER */
         public MainViewModel()
         {
             ////if (IsInDesignMode)
