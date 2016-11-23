@@ -9,8 +9,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Canvas><!--Yes, it is necessary to define canvas here-->
-        <Button Canvas.Top="{Binding Y, Mode=TwoWay}" Canvas.Left="{Binding X, Mode=TwoWay}" Width="{Binding Width, Mode=TwoWay}" 
-                            Height="{Binding Height, Mode=TwoWay}"  AllowDrop="True"
+        <Button Canvas.Top="{Binding Y, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
+                Canvas.Left="{Binding X, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
+                Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"  AllowDrop="True"
                 MouseLeftButtonDown="CountryButton_MouseLeftButtonDown"
                 MouseLeftButtonUp="CountryButton_MouseLeftButtonUp"
                 MouseMove="CountryButton_MouseMove"
