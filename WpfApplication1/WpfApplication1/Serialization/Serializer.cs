@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,77 +12,35 @@ namespace Risk.Serialization
 {
     public class Serializer
     {
-        public static Serializer Instance { get; } = new Serializer();
-
-        private Serializer() { }
-
-        /* SERIALIZATION */
-        public async void AsyncSerializeToFile(Map map, string path)
+        [STAThread]
+        static void Serialize()
         {
-            await Task.Run(() => SerializeToFile(map, path));
-        }
+            Shape shape1 = new Shape(50, 50, 50, 50);
+            Shape shape2 = new Shape(100, 100, 50, 50);
+            Line lines = new Line {From = shape1, To = shape2};
+            //Map map = new Map {connections = lines, countries = {shape1, shape2}};
 
-        private void SerializeToFile(Map map, string path)
-        {
-            using (var stream = new FileStream(path, FileMode.Create))
+            DataContractSerializer ser = new DataContractSerializer(typeof(Shape));
+           // ser.WriteObject();
+
+            // To serialize the hashtable and its key/value pairs,  
+            // you must first open a stream for writing. 
+            // In this case, use a file stream.
+            FileStream fs = new FileStream("DataFile.dat", FileMode.Create);
+
+            try
             {
-                var serializer = new DataContractSerializer(typeof(Map));
-                serializer.WriteObject(stream, map);
+               // formatter.Serialize(fs, ser);
             }
-        }
-
-        private string SerializeToString(Map diagram)
-        {
-            var stringBuilder = new StringBuilder();
-
-            using (TextWriter stream = new StringWriter(stringBuilder))
+            catch (SerializationException e)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Map));
-                serializer.Serialize(stream, diagram);
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw;
             }
-
-            return stringBuilder.ToString();
-        }
-
-        public Task<string> AsyncSerializeToString(Map map)
-        {
-            return Task.Run(() => SerializeToString(map));
-        }
-
-        /* DESERIALIZATION */
-
-        public Task<Map> AsyncDeserializeFromFile(string path)
-        {
-            return Task.Run(() => DeserializeFromFile(path));
-        }
-
-        private Map DeserializeFromFile(string path)
-        {
-            using (var stream = new FileStream(path, FileMode.Open))
+            finally
             {
-                var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());
-                var serializer = new DataContractSerializer(typeof(Map));
-                var diagram = serializer.ReadObject(reader, true) as Map;
-
-                return diagram;
-            }
-        }
-
-        public Task<Map> AsyncDeserializeFromString(string xml)
-        {
-            return Task.Run(() => DeserializeFromString(xml));
-        }
-
-        private Map DeserializeFromString(string xml)
-        {
-            using (TextReader stream = new StringReader(xml))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(Map));
-                Map diagram = serializer.Deserialize(stream) as Map;
-
-                return diagram;
+                fs.Close();
             }
         }
     }
-
 }

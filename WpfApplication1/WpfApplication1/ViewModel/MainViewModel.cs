@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Risk.Model;
 using Risk.Command;
+using Risk.Serialization;
 
 namespace Risk.ViewModel
 {
@@ -50,24 +51,17 @@ namespace Risk.ViewModel
         public ICommand MouseUpShapeCommand { get; }
 
         /*  FILE CONTROLLER */
+        public ICommand SaveMapCommand { get; }
+
         public MainViewModel()
         {
             ////if (IsInDesignMode)
 
-            Shapes = new ObservableCollection<Shape>()
-            {
-                //new Shape() { X = 400, Y = 400, Width = 80, Height = 80 },
-                //new Shape() { X = 250, Y = 250, Width = 100, Height = 100 }
-            };
-            Lines = new ObservableCollection<Line>()
-            {
-                //  new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
-            };
+            Shapes = new ObservableCollection<Shape>();
+            Lines = new ObservableCollection<Line>();
 
             UndoCommand = new RelayCommand(undoRedoController.Undo, undoRedoController.CanUndo);
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
-
-            // The commands are given the methods they should use to execute, and find out if they can execute.
 
             AddShapeCommand = new RelayCommand(AddShape);
             // RemoveShapeCommand = new RelayCommand<IList>(RemoveShape, CanRemoveShape);
@@ -85,6 +79,13 @@ namespace Risk.ViewModel
             //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             //MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
+
+            SaveMapCommand = new RelayCommand(SaveMap);
+        }
+
+        private void SaveMap()
+        {
+            throw new NotImplementedException();
         }
 
         private void AddLine()
