@@ -5,17 +5,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Risk.View.UserControl"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Canvas><!--Yes, it is necessary to define canvas here-->
         <Button Canvas.Top="{Binding Y, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
                 Canvas.Left="{Binding X, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
-                Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"  AllowDrop="True"
+                Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"  Background="Blue" AllowDrop="True"
+
                 MouseLeftButtonDown="CountryButton_MouseLeftButtonDown"
                 MouseLeftButtonUp="CountryButton_MouseLeftButtonUp"
-                MouseMove="CountryButton_MouseMove"
+                MouseMove="CountryButton_MouseMove" 
                 >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Test" >
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+              />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Button>
     </Canvas>
 </UserControl>

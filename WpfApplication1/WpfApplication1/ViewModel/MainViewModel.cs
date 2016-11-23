@@ -88,7 +88,7 @@ namespace Risk.ViewModel
              */
             //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             //MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
-            MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
+            MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
 
             NewMapCommand = new RelayCommand(NewMap);
             LoadMapCommand = new RelayCommand(LoadMap);
@@ -140,6 +140,17 @@ namespace Risk.ViewModel
         private void Paste()
         {
             throw new NotImplementedException();
+
+            //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
+            ////{
+
+            ////    // Code runs in Blend --> create design time data.
+            ////}
+            ////else
+            ////{
+            ////    // Code runs "for real"
+            ////}
+
         }
 
         private void AddLine()
@@ -177,37 +188,55 @@ namespace Risk.ViewModel
             // From the shapes visual element, the Shape object which is the DataContext is retrieved.
             return (Shape)shapeVisualElement.DataContext;
         }
-
-        private void MouseUpShape(MouseButtonEventArgs e)
+       /* public void CountryButton()
         {
+            //Ensures that the event handler is there.
+            AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(MouseDownShape), true);
+                  }*/
+
+
+        public void MouseDownShape(MouseButtonEventArgs e)
+        {
+
+            //CountryButton b = (CountryButton)sender;
+            //            Canvas c = (Canvas)b.Parent;
+
             // Used for adding a Line.
+            Console.WriteLine("Test: MouseDownShape happened");
             if (isAddingLine)
             {
+                Console.WriteLine("Test: MouseDownShape happened and isAddingLine==true");
+                //, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}
                 // Because a MouseUp event has happened and a Line is currently being drawn, 
                 //  the Shape that the Line is drawn from or to has been selected, and is here retrieved from the event parameters.
-                var shape = TargetShape(e);
-                // This checks if this is the first Shape chosen during the Line adding operation, 
-                //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
-                // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
-                //  Also the Shape is set as selected, to make it look different visually.
-                if (addingLineFrom == null) { addingLineFrom = shape; addingLineFrom.IsSelected = true; }
-                // If this is not the first Shape choosen, and therefore the second, 
-                //  it is checked that the first and second Shape are different.
-                else if (addingLineFrom.Number != shape.Number)
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
-                    //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
-                    undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = addingLineFrom, To = shape }));
-                    // The property used for visually indicating that a Line is being Drawn is cleared, 
-                    //  so the View can return to its original and default apperance.
-                    addingLineFrom.IsSelected = false;
-                    // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
-                    //  so the MainViewModel is ready for another Line adding operation.
-                    isAddingLine = false;
-                    addingLineFrom = null;
-                    // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
-                    //  so the View can return to its original and default apperance.
-                    RaisePropertyChanged(() => ModeOpacity);
+                    Console.WriteLine("Test: Mouse in Downstate");
+                    var shape = (Risk.Model.Shape)(((FrameworkElement)e.MouseDevice.Target).DataContext); //TargetShape(e);
+
+                    // This checks if this is the first Shape chosen during the Line adding operation, 
+                    //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
+                    // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
+                    //  Also the Shape is set as selected, to make it look different visually.
+                    if (addingLineFrom == null) { addingLineFrom = shape; addingLineFrom.IsSelected = true; }
+                    // If this is not the first Shape choosen, and therefore the second, 
+                    //  it is checked that the first and second Shape are different.
+                    else if (addingLineFrom.Number != shape.Number)
+                    {
+                        // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
+                        //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
+                        undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = addingLineFrom, To = shape }));
+                        // The property used for visually indicating that a Line is being Drawn is cleared, 
+                        //  so the View can return to its original and default apperance.
+                        addingLineFrom.IsSelected = false;
+                        // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
+                        //  so the MainViewModel is ready for another Line adding operation.
+                        isAddingLine = false;
+                        addingLineFrom = null;
+                        // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
+                        //  so the View can return to its original and default apperance.
+                        RaisePropertyChanged(() => ModeOpacity);
+                    }
                 }
             }
             // Used for moving a Shape.

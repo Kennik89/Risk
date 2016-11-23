@@ -28,5 +28,10 @@ namespace Risk.View
         {
 
         }
+
+        private void EditorWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
