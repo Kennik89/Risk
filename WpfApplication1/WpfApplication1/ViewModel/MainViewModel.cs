@@ -30,7 +30,6 @@ namespace Risk.ViewModel
         private Shape addingLineFrom;
 
         public double ModeOpacity => isAddingLine ? 0.4 : 1.0;
-        private Point initialMousePosition;
         // Saves the initial point that the shape has during a move operation.
         private Point initialShapePosition;
 
@@ -79,8 +78,8 @@ namespace Risk.ViewModel
              * MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
              * MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
              */
-            //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
-            //MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
+            MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
+            MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
         }
 
@@ -113,6 +112,16 @@ namespace Risk.ViewModel
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             // From the shapes visual element, the Shape object which is the DataContext is retrieved.
             return (Shape)shapeVisualElement.DataContext;
+        }
+
+        private void MouseDownShape(MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void MouseMoveShape(MouseButtonEventArgs e)
+        {
+
         }
 
         private void MouseUpShape(MouseButtonEventArgs e)
