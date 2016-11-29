@@ -11,9 +11,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Canvas><!--Yes, it is necessary to define canvas here-->
-        <Button Canvas.Top="{Binding Y, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
+        <Rectangle Canvas.Top="{Binding Y, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
                 Canvas.Left="{Binding X, Mode=TwoWay, UpdateSourceTrigger = LostFocus}" 
-                Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"  AllowDrop="True">
+                Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"  AllowDrop="True" Fill="Green">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">
                     <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
@@ -25,6 +25,6 @@
                     <cmd:EventToCommand Command="{Binding DataContext.MouseUpShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Button>
+        </Rectangle>
     </Canvas>
 </UserControl>

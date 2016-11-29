@@ -2,7 +2,6 @@
 using Risk.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +19,7 @@ namespace Risk.Command
         //  therefore when this collection is changed in a object of this class, 
         //  it also changes the collection that the MainViewModel uses.
         // For a description of an ObservableCollection see the MainViewModel class.
-        private ObservableCollection<Line> lines;
+        private System.Collections.ObjectModel.ObservableCollection<Line> lines;
         // The 'line' field holds a new line, that is added to the 'lines' collection, 
         //  and if undone, it is removed from the collection.
         private Line line;
@@ -30,7 +29,7 @@ namespace Risk.Command
         #region Constructor
 
         // For changing the current state of the diagram.
-        public AddLineCommand(ObservableCollection<Line> _lines, Line _line)
+        public AddLineCommand(System.Collections.ObjectModel.ObservableCollection<Line> _lines, Line _line)
         {
             lines = _lines;
             line = _line;
