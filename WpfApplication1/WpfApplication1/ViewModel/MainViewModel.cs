@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Risk.Model;
 using Risk.Command;
+using Risk.Serialization;
 
 namespace Risk.ViewModel
 {
@@ -33,41 +34,47 @@ namespace Risk.ViewModel
         // Saves the initial point that the shape has during a move operation.
         private Point initialShapePosition;
 
+        /*  UNDO/REDO   */
         public ICommand UndoCommand { get; }
         public ICommand RedoCommand { get; }
 
-
+        /*  MAP FUNCTIONALITIES */
         public ICommand AddShapeCommand { get; }
-        public ICommand RemoveShapeCommand { get; }
         public ICommand AddLineCommand { get; }
-        public ICommand RemoveLinesCommand { get; }
+        public ICommand DeleteCommand { get; }
 
+        /*  MOUSE CONTROLLER    */
         public ICommand MouseDownShapeCommand { get; }
         public ICommand MouseMoveShapeCommand { get; }
         public ICommand MouseUpShapeCommand { get; }
+
+        /*  FILE MENU CONTROLLER */
+        public ICommand NewMapCommand { get; }
+        public ICommand LoadMapCommand { get; }
+        public ICommand SaveMapCommand { get; }
+        public ICommand ExitCommand { get; }
+
+        /*  GAME CONTROLLER */
+        public ICommand StartCommand { get; }
+
+        /* EDIT CONTROLLER */
+        public ICommand CutCommand { get; }
+        public ICommand CopyCommand { get; }
+        public ICommand PasteCommand { get; }                                                                
 
         public MainViewModel()
         {
             ////if (IsInDesignMode)
 
-            Shapes = new ObservableCollection<Shape>()
-            {
-                //new Shape() { X = 400, Y = 400, Width = 80, Height = 80 },
-                //new Shape() { X = 250, Y = 250, Width = 100, Height = 100 }
-            };
-            Lines = new ObservableCollection<Line>()
-            {
-                //  new Line() { From = Shapes.ElementAt(0), To = Shapes.ElementAt(1) }
-            };
+            Shapes = new ObservableCollection<Shape>();
+            Lines = new ObservableCollection<Line>();
 
             UndoCommand = new RelayCommand(undoRedoController.Undo, undoRedoController.CanUndo);
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
-            // The commands are given the methods they should use to execute, and find out if they can execute.
-
             AddShapeCommand = new RelayCommand(AddShape);
-            // RemoveShapeCommand = new RelayCommand<IList>(RemoveShape, CanRemoveShape);
             AddLineCommand = new RelayCommand(AddLine);
+            DeleteCommand = new RelayCommand(Delete);
             //RemoveLinesCommand = new RelayCommand<IList>(RemoveLines, CanRemoveLines);
 
             // The commands are given the methods they should use to execute, and find out if they can execute.
@@ -80,7 +87,69 @@ namespace Risk.ViewModel
              */
             MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             //MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
-            MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
+            MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
+
+            NewMapCommand = new RelayCommand(NewMap);
+            LoadMapCommand = new RelayCommand(LoadMap);
+            SaveMapCommand = new RelayCommand(SaveMap);
+            ExitCommand = new RelayCommand(Exit);
+            StartCommand= new RelayCommand(StartMap);
+            CutCommand = new RelayCommand(Cut);
+            CopyCommand = new RelayCommand(Copy);
+            PasteCommand = new RelayCommand(Paste);
+        }
+
+        private void NewMap()
+        {
+            Lines.Clear();
+            Shapes.Clear();
+            undoRedoController.Clear();
+        }
+
+        private void LoadMap()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SaveMap()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Exit()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StartMap()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Cut()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Copy()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Paste()
+        {
+            throw new NotImplementedException();
+
+            //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
+            ////{
+
+            ////    // Code runs in Blend --> create design time data.
+            ////}
+            ////else
+            ////{
+            ////    // Code runs "for real"
+            ////}
+
         }
 
         private void AddLine()
@@ -97,6 +166,11 @@ namespace Risk.ViewModel
             //undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
             //Shapes[0].X = 3;
         }
+        private void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
         private Line TargetLine(MouseEventArgs e)
         {
             // Here the visual element that the mouse is captured by is retrieved.
@@ -113,6 +187,11 @@ namespace Risk.ViewModel
             // From the shapes visual element, the Shape object which is the DataContext is retrieved.
             return (Shape)shapeVisualElement.DataContext;
         }
+       /* public void CountryButton()
+        {
+            //Ensures that the event handler is there.
+            AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(MouseDownShape), true);
+                  }*/
 
         private void MouseDownShape(MouseButtonEventArgs e)
         {
@@ -125,35 +204,64 @@ namespace Risk.ViewModel
         }
 
         private void MouseUpShape(MouseButtonEventArgs e)
+
         {
+
+            //CountryButton b = (CountryButton)sender;
+            //            Canvas c = (Canvas)b.Parent;
+
             // Used for adding a Line.
+            Console.WriteLine("Test: MouseDownShape happened");
             if (isAddingLine)
             {
+                Console.WriteLine("Test: MouseDownShape happened and isAddingLine==true");
+                //, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}
                 // Because a MouseUp event has happened and a Line is currently being drawn, 
                 //  the Shape that the Line is drawn from or to has been selected, and is here retrieved from the event parameters.
-                var shape = TargetShape(e);
-                // This checks if this is the first Shape chosen during the Line adding operation, 
-                //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
-                // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
-                //  Also the Shape is set as selected, to make it look different visually.
-                if (addingLineFrom == null) { addingLineFrom = shape; addingLineFrom.IsSelected = true; }
-                // If this is not the first Shape choosen, and therefore the second, 
-                //  it is checked that the first and second Shape are different.
-                else if (addingLineFrom.Number != shape.Number)
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
+//<<<<<<< HEAD
                     // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
                     //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
                     //undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = addingLineFrom, To = shape }));
                     // The property used for visually indicating that a Line is being Drawn is cleared, 
                     //  so the View can return to its original and default apperance.
-                    addingLineFrom.IsSelected = false;
+//                    addingLineFrom.IsSelected = false;
                     // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
                     //  so the MainViewModel is ready for another Line adding operation.
-                    isAddingLine = false;
-                    addingLineFrom = null;
+//                    isAddingLine = false;
+//                    addingLineFrom = null;
                     // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
                     //  so the View can return to its original and default apperance.
-                    RaisePropertyChanged(() => ModeOpacity);
+//                    RaisePropertyChanged(() => ModeOpacity);
+//=======
+                    Console.WriteLine("Test: Mouse in Downstate");
+                    var shape = (Risk.Model.Shape)(((FrameworkElement)e.MouseDevice.Target).DataContext); //TargetShape(e);
+
+                    // This checks if this is the first Shape chosen during the Line adding operation, 
+                    //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
+                    // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
+                    //  Also the Shape is set as selected, to make it look different visually.
+                    if (addingLineFrom == null) { addingLineFrom = shape; addingLineFrom.IsSelected = true; }
+                    // If this is not the first Shape choosen, and therefore the second, 
+                    //  it is checked that the first and second Shape are different.
+                    else if (addingLineFrom.Number != shape.Number)
+                    {
+                        // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
+                        //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
+                        undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = addingLineFrom, To = shape }));
+                        // The property used for visually indicating that a Line is being Drawn is cleared, 
+                        //  so the View can return to its original and default apperance.
+                        addingLineFrom.IsSelected = false;
+                        // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
+                        //  so the MainViewModel is ready for another Line adding operation.
+                        isAddingLine = false;
+                        addingLineFrom = null;
+                        // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
+                        //  so the View can return to its original and default apperance.
+                        RaisePropertyChanged(() => ModeOpacity);
+                    }
+//>>>>>>> refs/remotes/origin/master
                 }
             }
             // Used for moving a Shape.
@@ -180,4 +288,3 @@ namespace Risk.ViewModel
         }
     }
 }
-

@@ -54,7 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddShapeCommand.cs" />
+    <Compile Include="Model\Map.cs" />
     <Compile Include="Command\AddLineCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
@@ -207,7 +208,6 @@
     <Resource Include="Images\RiskMapDummy.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UndoRedo\" />
     <Folder Include="ViewModel\Line\" />
   </ItemGroup>
   <ItemGroup>

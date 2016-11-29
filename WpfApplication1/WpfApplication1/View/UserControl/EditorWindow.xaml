@@ -41,10 +41,16 @@
                     
                 </Rectangle>
                 </Canvas>-->
+
                 
                 <!--<local:CountryButton>
                 </local:CountryButton>-->
                 
+
+                <!--<local:CountryButton Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}">
+               >
+
+                </local:CountryButton>-->
                 <!--DataType="{x:Type model:dataContainer}">-->
                 <!-- <Viewbox:ShapeUserControl/>-->
             </DataTemplate>

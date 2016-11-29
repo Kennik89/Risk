@@ -1,30 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Collections;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Soap;
-using Risk.Command;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using Risk.Model;
 
 namespace Risk.Serialization
 {
-    class Serializer
+    public class Serializer
     {
         [STAThread]
         static void Serialize()
         {
-            // Create a hashtable of values that will eventually be serialized.
-            ObservableCollection<Shape> Shapes = new ObservableCollection<Shape>();
+            Shape shape1 = new Shape(50, 50, 50, 50);
+            Shape shape2 = new Shape(100, 100, 50, 50);
+            Line lines = new Line {From = shape1, To = shape2};
+            //Map map = new Map {connections = lines, countries = {shape1, shape2}};
 
-            FileStream fs = new FileStream("DataFile.soap", FileMode.Create);
+            DataContractSerializer ser = new DataContractSerializer(typeof(Shape));
+           // ser.WriteObject();
 
-            // Construct a SoapFormatter and use it 
-            // to serialize the data to the stream.
-            SoapFormatter formatter = new SoapFormatter();
+            // To serialize the hashtable and its key/value pairs,  
+            // you must first open a stream for writing. 
+            // In this case, use a file stream.
+            FileStream fs = new FileStream("DataFile.dat", FileMode.Create);
+
             try
             {
-                formatter.Serialize(fs, Shapes);
+               // formatter.Serialize(fs, ser);
             }
             catch (SerializationException e)
             {
