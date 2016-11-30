@@ -109,6 +109,7 @@ namespace Risk.ViewModel
 
         private void LoadMap()
         {
+            NewMap();
             // TODO: Need to test first
             _serializer.Load();
         }
@@ -203,7 +204,6 @@ namespace Risk.ViewModel
              //Ensures that the event handler is there.
              AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(MouseDownShape), true);
                    }*/
-
         public void MouseDownShape(MouseButtonEventArgs e)
         {
 
