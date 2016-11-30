@@ -271,7 +271,7 @@ namespace Risk.ViewModel
             }
         }
 
-        // NEDENUNDER ER SKABELON TIL MOUSEMOVESHAPE
+        // NEDENUNDER ER SKABELON TIL MOUSEMOVESHAPE (Kenneth)
         /*
  *          private void MouseMoveShape(MouseEventArgs e)
         {
