@@ -1,47 +1,53 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Risk.Model
 {
+    [DataContract]
     public class Shape : NotifyBase
     {
 
-        private static int counter = 0;
+        private static Random _rand = new Random();
 
+        private static int _counter = 0;
 
         public int Number { get; }
 
-        private double x = 200;
-        private double y = 200;
-        private double width = 100;
-        private double height = 100;
+        private double _x = _rand.Next(0, 700);
+        private double _y = _rand.Next(0, 500);
+        private double _width = 50;
+        private double _height = 50;
 
+        [DataMember]
         public double X
         {
-            get { return x; }
-            set { x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); }
+            get { return _x; }
+            set { _x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); }
         }
 
+        [DataMember]
         public double Y
         {
-            get { return y; }
-            set { y = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); }
+            get { return _y; }
+            set { _y = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); }
         }
 
         public double Width
         {
-            get { return width; }
-            set { width = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); NotifyPropertyChanged(() => CenterX); }
+            get { return _width; }
+            set { _width = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); NotifyPropertyChanged(() => CenterX); }
         }
 
         public double Height
         {
-            get { return height; }
-            set { height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); }
+            get { return _height; }
+            set { _height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); }
         }
 
         public double CanvasCenterX
@@ -59,18 +65,23 @@ namespace Risk.Model
         public double CenterX => Width / 2;
         public double CenterY => Height / 2;
 
-        private bool isSelected;
+        private bool _isSelected;
 
-        public bool IsSelected { get { return isSelected; } set { isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
+        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
         public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
 
         public Shape(double posX, double posY, double posHeight, double posWidth)
         {
-            Number = ++counter;
+            Number = ++_counter;
             this.X = posX;
             this.Y = posY;
             this.Height = posHeight;
             this.Width = posWidth;
+        }
+
+        public Shape()
+        {
+            Number = ++_counter;
         }
 
         public override string ToString() => Number.ToString();

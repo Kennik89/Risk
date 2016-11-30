@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddShapeCommand.cs" />
+    <Compile Include="Command\MoveShapeCommand.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Command\AddLineCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Model\NotifyBase.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
-    <Compile Include="Serialization\Serializer.cs" />
+    <Compile Include="LoadSave\Serializer.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\Country\CountryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
