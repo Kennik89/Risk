@@ -72,14 +72,14 @@ namespace Risk.View.UserControl
         public CountryButton()
         {
             InitializeComponent();
-            target = (Risk.Model.Shape)this.DataContext;
+/*            target = (Risk.Model.Shape)this.DataContext;
             //Ensures that the event handler is there.
             AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(CountryButton_MouseLeftButtonDown), true);
             AddHandler(FrameworkElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(CountryButton_MouseLeftButtonUp), true);
             AddHandler(FrameworkElement.MouseMoveEvent, new MouseEventHandler(CountryButton_MouseMove), true);
 
             DataContextChanged += new DependencyPropertyChangedEventHandler(CountryButton_DataContextChanged);
-            //Datacontextchanged is from stackoverflowechange
+*/            //Datacontextchanged is from stackoverflowechange
         }
 
         void CountryButton_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

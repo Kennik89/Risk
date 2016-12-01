@@ -20,9 +20,14 @@
                 MouseMove="CountryButton_MouseMove" 
                 >
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Test" >
-                    <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-              />
+                <i:EventTrigger EventName="MouseDown">
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseMove">
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseMoveShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseUp">
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseUpShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Rectangle>
