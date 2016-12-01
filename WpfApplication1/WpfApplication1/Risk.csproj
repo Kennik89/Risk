@@ -84,9 +84,6 @@
     <Compile Include="Model\Map.cs" />
     <Compile Include="Command\AddLineCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
-    <Compile Include="Model\Line.cs" />
-    <Compile Include="Model\Shape.cs" />
-    <Compile Include="Model\NotifyBase.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="LoadSave\Serializer.cs" />
@@ -138,7 +135,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ModelMainFile.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\DummyUserControl.xaml.cs">
       <DependentUpon>DummyUserControl.xaml</DependentUpon>
@@ -214,6 +210,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\Line\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{260d4a84-9321-4440-af37-fc8344c15ff5}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

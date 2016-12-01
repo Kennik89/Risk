@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Risk.Model
 {
-    class EditorLogic
+    class Diagram
     {
+        public List<Shape> Shapes { get; set; }
+        public List<Line> Lines { get; set; }
     }
 }

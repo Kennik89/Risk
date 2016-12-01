@@ -4,35 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Risk.Model;
 
 namespace Risk.Command
 {
-    public class MoveShapeCommand : IUndoRedoCommand
+    class MoveShapeCommand : IUndoRedoCommand
     {
-
         private Shape shape;
+        private double dx;
+        private double dy;
 
-        private double offsetX;
-        private double offsetY;
-
-        // For changing the current state of the diagram.
-        public MoveShapeCommand(Shape _shape, double _offsetX, double _offsetY)
+        public MoveShapeCommand(Shape _shape, double _dx, double _dy)
         {
             shape = _shape;
-            offsetX = _offsetX;
-            offsetY = _offsetY;
+            dx = _dx;
+            dy = _dy;
         }
 
         public void Execute()
         {
-            shape.CanvasCenterX += offsetX;
-            shape.CanvasCenterY += offsetY;
+            shape.X += dx;
+            shape.Y += dy;
         }
 
         public void UnExecute()
         {
-            shape.CanvasCenterX -= offsetX;
-            shape.CanvasCenterY -= offsetY;
+            shape.X -= dx;
+            shape.Y -= dy;
         }
+
     }
 }
