@@ -112,9 +112,11 @@ namespace Risk.ViewModel
 
         private void LoadMap()
         {
-            NewMap();
+            Shapes.Clear();
+            Lines.Clear();
+            //NewMap();
             // TODO: Need to test first
-            _serializer.Load();
+            _serializer.Load(Shapes, Lines);
         }
 
         private void SaveMap()
@@ -122,7 +124,7 @@ namespace Risk.ViewModel
             // TODO: Need to test first
             try
             {
-                _serializer.Save();
+                _serializer.Save(Shapes, Lines);
             }
 
             catch (SerializationException serExc)
@@ -275,7 +277,7 @@ namespace Risk.ViewModel
         if (_addingLineFrom == null) { _addingLineFrom = shape; _addingLineFrom.IsSelected = true; }
         // If this is not the first Shape choosen, and therefore the second, 
         //  it is checked that the first and second Shape are different.
-        else if (_addingLineFrom.Number != shape.Number)
+        else if (_addingLineFrom.UID != shape.UID)
         {
             // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
             //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
