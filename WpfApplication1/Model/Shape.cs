@@ -11,29 +11,34 @@ using System.Windows.Media;
 
 namespace Risk.Model
 {
-    //[DataContract]
+    [DataContract]
+    [KnownType(typeof(NotifyBase))]
     public class Shape : NotifyBase
     {
 
         private static Random _rand = new Random();
 
+        [DataMember]
         private static int _counter = 0;
 
-        public int Number { get; }
+        //[DataMember]
+        public int UID { get; }
 
+        [DataMember]
         private double _x = _rand.Next(0, 700);
+        [DataMember]
         private double _y = _rand.Next(0, 500);
+        [DataMember]
         private double _width = 50;
+        [DataMember]
         private double _height = 50;
 
-        //[DataMember]
         public double X
         {
             get { return _x; }
             set { _x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); }
         }
 
-        //[DataMember]
         public double Y
         {
             get { return _y; }
@@ -74,7 +79,7 @@ namespace Risk.Model
 
         public Shape(double posX, double posY, double posHeight, double posWidth)
         {
-            Number = ++_counter;
+            UID = ++_counter;
             this.X = posX;
             this.Y = posY;
             this.Height = posHeight;
@@ -83,9 +88,9 @@ namespace Risk.Model
 
         public Shape()
         {
-            Number = ++_counter;
+            UID = ++_counter;
         }
 
-        public override string ToString() => Number.ToString();
+        public override string ToString() => UID.ToString();
     }
 }
