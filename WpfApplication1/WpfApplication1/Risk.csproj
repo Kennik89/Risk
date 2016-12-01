@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddShapeCommand.cs" />
+    <Compile Include="Command\MoveShapeCommand.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Command\AddLineCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
