@@ -21,7 +21,7 @@ namespace Risk.LoadSave
         {
             //https://msdn.microsoft.com/en-us/library/ms752244(v=vs.110).aspx
 
-            FileStream writer = new FileStream("C:/Users/Martin/Datafile.xml", FileMode.Create);
+            FileStream writer = new FileStream("Datafile.xml", FileMode.Create);
             
             //Serialize the Record object to a memory stream using DataContractSerializer.
             DataContractSerializer serializer = new DataContractSerializer(typeof(Map));
@@ -63,7 +63,7 @@ namespace Risk.LoadSave
             Map m;
             //Read from file
             DataContractSerializer dcs = new DataContractSerializer(typeof(Map));
-            FileStream fs = new FileStream("C:/Users/Martin/Datafile.xml", FileMode.Open);
+            FileStream fs = new FileStream("Datafile.xml", FileMode.Open);
             XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
             
             //Actual reading and assigning to map
