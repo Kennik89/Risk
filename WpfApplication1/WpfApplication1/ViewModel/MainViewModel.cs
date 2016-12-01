@@ -113,9 +113,10 @@ namespace Risk.ViewModel
         private void LoadMap()
         {
             Shapes.Clear();
+            Lines.Clear();
             //NewMap();
             // TODO: Need to test first
-            _serializer.Load(Shapes);
+            _serializer.Load(Shapes, Lines);
         }
 
         private void SaveMap()
@@ -123,7 +124,7 @@ namespace Risk.ViewModel
             // TODO: Need to test first
             try
             {
-                _serializer.Save(Shapes);
+                _serializer.Save(Shapes, Lines);
             }
 
             catch (SerializationException serExc)

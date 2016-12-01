@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Diagram.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="NotifyBase.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

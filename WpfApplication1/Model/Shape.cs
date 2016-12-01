@@ -21,8 +21,8 @@ namespace Risk.Model
         [DataMember]
         private static int _counter = 0;
 
-        //[DataMember]
-        public int UID { get; }
+        [DataMember]
+        public int UID { get; set; }//A setter is necessary for the serializer to work
 
         [DataMember]
         private double _x = _rand.Next(0, 700);
