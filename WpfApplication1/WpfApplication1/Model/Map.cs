@@ -10,5 +10,6 @@ namespace Risk.Model
     {
         public List<Shape> countries { get; set; }
         public List<Line> connections { get; set; }
+
     }
 }
