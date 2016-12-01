@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 namespace Risk.Model
 {
-    [DataContract]
+    //[DataContract]
     public class Shape : NotifyBase
     {
 
@@ -26,14 +26,14 @@ namespace Risk.Model
         private double _width = 50;
         private double _height = 50;
 
-        [DataMember]
+        //[DataMember]
         public double X
         {
             get { return _x; }
             set { _x = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); }
         }
 
-        [DataMember]
+        //[DataMember]
         public double Y
         {
             get { return _y; }
