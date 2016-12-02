@@ -209,7 +209,6 @@
     <Resource Include="Images\RiskMapDummy.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="ViewModel\Line\" />
   </ItemGroup>
   <ItemGroup>
