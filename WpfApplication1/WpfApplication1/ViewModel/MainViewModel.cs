@@ -100,6 +100,8 @@ namespace Risk.ViewModel
             PasteCommand = new RelayCommand(Paste);
         }
 
+        /* METHOD THAT WILL BE CALLED WHEN THE BUTTON IS PRESSED */
+
         private void NewMap()
         {
             Lines.Clear();
@@ -199,6 +201,9 @@ namespace Risk.ViewModel
             //DELETE CURRENTLYSELECTED
 
         }
+
+        /* NON-BUTTON METHODS */
+
         private void saveThread()
         {
             _serializer.Save(Shapes, Lines);
