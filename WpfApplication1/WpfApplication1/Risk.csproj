@@ -82,6 +82,7 @@
     <Compile Include="Command\AddShapeCommand.cs" />
     <Compile Include="Command\MoveShapeCommand.cs" />
     <Compile Include="Command\AddLineCommand.cs" />
+    <Compile Include="Command\RemoveShapeCommand.cs" />
     <Compile Include="Command\RemoveLinesCommand.cs" />
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />

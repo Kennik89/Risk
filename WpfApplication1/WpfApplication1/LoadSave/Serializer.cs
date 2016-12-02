@@ -17,7 +17,7 @@ namespace Risk.LoadSave
     {
         public static Serializer Instance { get; } = new Serializer();
 
-        [STAThread]
+        [MTAThread]
         public void Save(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
             //https://msdn.microsoft.com/en-us/library/ms752244(v=vs.110).aspx
@@ -80,7 +80,6 @@ namespace Risk.LoadSave
             ofd.Title = "Load Map";
             ofd.Filter = "Risk Files (.risk)|*.risk";
 
-
             ofd.ShowDialog();
             //Read from file 
             DataContractSerializer dcs = new DataContractSerializer(typeof(Map));
@@ -93,8 +92,6 @@ namespace Risk.LoadSave
             reader.Close();
             fs.Close();
 
-            //Writing back to collections
-            //It is important that shapes are serialized first!
             foreach (Shape shape in m.countries)
             {
                 shapes.Add(shape);
@@ -105,7 +102,6 @@ namespace Risk.LoadSave
                 lines.Add(new Line(line, shapes));
             }
             Console.WriteLine(lines.Count);
-            //End
         }
     }
 }

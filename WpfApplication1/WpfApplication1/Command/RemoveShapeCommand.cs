@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 namespace Risk.Command
 {
     // Undo/Redo command for removing Lines.
-    public class RemoveLinesCommand : IUndoRedoCommand
+    public class RemoveShapeCommand : IUndoRedoCommand
     {
         #region Fields
 
-        private ObservableCollection<Line> lines;
-        private List<Line> linesToRemove;
+        private ObservableCollection<Shape> shapes;
+        private List<Shape> shapeToRemove;
         #endregion
 
         #region Constructor
 
-        public RemoveLinesCommand(ObservableCollection<Line> _lines, List<Line> _linesToRemove)
+        public RemoveShapeCommand(ObservableCollection<Shape> _shapes, List<Shape> _shapesToRemove)
         {
-            lines = _lines;
-            linesToRemove = _linesToRemove;
+            shapes = _shapes;
+            shapeToRemove = _shapesToRemove;
         }
 
         #endregion
@@ -32,13 +32,13 @@ namespace Risk.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            linesToRemove.ForEach(x => lines.Remove(x));
+            shapeToRemove.ForEach(x => shapes.Remove(x));
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            linesToRemove.ForEach(x => lines.Add(x));
+            shapeToRemove.ForEach(x => shapes.Add(x));
         }
 
         #endregion
