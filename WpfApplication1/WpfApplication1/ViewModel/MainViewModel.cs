@@ -37,6 +37,7 @@ namespace Risk.ViewModel
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         private bool isDragging = false;
+        public Shape currentlySelected;
 
 
         /*  UNDO/REDO   */
@@ -66,6 +67,7 @@ namespace Risk.ViewModel
         public ICommand CutCommand { get; }
         public ICommand CopyCommand { get; }
         public ICommand PasteCommand { get; }
+
 
         public MainViewModel()
         {
