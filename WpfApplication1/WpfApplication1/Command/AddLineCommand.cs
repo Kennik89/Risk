@@ -8,20 +8,12 @@ using System.Threading.Tasks;
 
 namespace Risk.Command
 {
-    // Undo/Redo command for adding a Line.
     public class AddLineCommand : IUndoRedoCommand
     {
-        // Regions can be used to make code foldable (minus/plus sign to the left).
         #region Fields
 
-        // The 'lines' field holds the current collection of lines, 
-        //  and the reference points to the same collection as the one the MainViewModel point to, 
-        //  therefore when this collection is changed in a object of this class, 
-        //  it also changes the collection that the MainViewModel uses.
-        // For a description of an ObservableCollection see the MainViewModel class.
+
         private System.Collections.ObjectModel.ObservableCollection<Line> lines;
-        // The 'line' field holds a new line, that is added to the 'lines' collection, 
-        //  and if undone, it is removed from the collection.
         private Line line;
 
         #endregion
