@@ -34,6 +34,8 @@ namespace Risk.LoadSave
             //Serialize the Record object to a memory stream using DataContractSerializer.
             DataContractSerializer serializer = new DataContractSerializer(typeof(Map));
 
+            //Maybe make all this until writing in a different thread since savefiledialog may block?
+
             //Create a Map object with lines and shapes
             Map m = new Map();
 
