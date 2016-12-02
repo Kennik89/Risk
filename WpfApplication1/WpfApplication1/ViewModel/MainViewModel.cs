@@ -15,6 +15,7 @@ using System.Windows.Media;
 using Risk.Model;
 using Risk.Command;
 using Risk.LoadSave;
+using System.Threading;
 
 namespace Risk.ViewModel
 {
@@ -24,7 +25,7 @@ namespace Risk.ViewModel
         public ObservableCollection<Line> Lines { get; set; }
 
         // Enable to call the methods from those classes
-        private Serializer _serializer = Serializer.Instance;
+        private _serializer _serializer = _serializer.Instance;
         private UndoRedoController _undoRedoController = UndoRedoController.Instance;
 
         private bool _isAddingLine;
@@ -105,11 +106,20 @@ namespace Risk.ViewModel
 
         private void LoadMap()
         {
-            Shapes.Clear();
-            Lines.Clear();
             //NewMap();
             // TODO: Need to test first
-            _serializer.Load(Shapes, Lines);
+            if (_serializer.Load(Shapes, Lines))
+            {
+                //Clearer undo-redo-stacken. Shapes og Lines bliver clearet i load,
+                //Da disse ikke må cleares efter alt er loadet, men kun skal cleares
+                //Hvis loaden er succesfuld.
+                _undoRedoController.Clear();
+            }
+        }
+
+        private void saveThread()
+        {
+            _serializer.Save(Shapes, Lines);
         }
 
         private void SaveMap()
@@ -117,7 +127,14 @@ namespace Risk.ViewModel
             // TODO: Need to test first
             try
             {
-                _serializer.Save(Shapes, Lines);
+                ThreadStart save = new ThreadStart(saveThread);
+                Thread s = new Thread(save);
+                s.SetApartmentState(ApartmentState.STA);
+                s.Start();
+                /*Console.WriteLine("Main Thread waiting 10s");
+                System.Threading.Thread.Sleep(10000);
+                Console.WriteLine("Main Thread waited 10s");
+                */
             }
 
             catch (SerializationException serExc)
@@ -179,6 +196,9 @@ namespace Risk.ViewModel
         private void Delete()
         {
             throw new NotImplementedException();
+
+            //DELETE CURRENTLYSELECTED
+
         }
 
         private Line TargetLine(MouseEventArgs e)
@@ -208,7 +228,7 @@ namespace Risk.ViewModel
             if (isDragging)
             {
                 endDrag(e);
-
+                currentlySelected = TargetShape(e);
             }
         }
 

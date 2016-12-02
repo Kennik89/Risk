@@ -13,13 +13,17 @@ using System.Windows.Forms;
 
 namespace Risk.LoadSave
 {
-    public class Serializer
+    public class _serializer
     {
-        public static Serializer Instance { get; } = new Serializer();
+        public static _serializer Instance { get; } = new _serializer();
 
         [STAThread]
         public void Save(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
+            /*
+             * System.Threading.Thread.Sleep(5000);
+            Console.WriteLine("Save-thread is running");
+            */
             //https://msdn.microsoft.com/en-us/library/ms752244(v=vs.110).aspx
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -66,7 +70,9 @@ namespace Risk.LoadSave
             writer.Close();
         }
 
-        public void Load(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
+        //Return value is added to ensure that undo-redo stack is cleared in mainview-model
+        //Without bool return, undo-redo had to be a parameter.
+        public bool Load(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
             //http://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
             //Define a map
@@ -82,6 +88,13 @@ namespace Risk.LoadSave
 
 
             ofd.ShowDialog();
+
+            if (ofd.FileName.Length == 0)
+            {
+                return false;
+            }
+            shapes.Clear();
+            lines.Clear();
             //Read from file 
             DataContractSerializer dcs = new DataContractSerializer(typeof(Map));
             FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
@@ -106,6 +119,7 @@ namespace Risk.LoadSave
             }
             //Console.WriteLine(lines.Count);
             //End
+            return true;
         }
     }
 }

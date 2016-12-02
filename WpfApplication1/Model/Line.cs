@@ -16,7 +16,7 @@ namespace Risk.Model
         private Shape to;
         public Shape To { get { return to; } set { to = value; NotifyPropertyChanged(); } }
 
-
+        //DO NOT DELETE EMPTY CONSTRUCTOR
         public Line()
         {
 
@@ -57,6 +57,8 @@ namespace Risk.Model
         public int IDfrom;
         public int IDto;
 
+        //Do not delete the empty constructor
+        //(It breaks serialization)
         public serialLine()
         {
 
