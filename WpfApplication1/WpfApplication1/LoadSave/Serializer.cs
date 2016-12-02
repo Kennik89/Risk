@@ -9,6 +9,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Risk.Model;
 using System.Collections.ObjectModel;
+using System.Windows.Forms;
 
 namespace Risk.LoadSave
 {
@@ -20,8 +21,15 @@ namespace Risk.LoadSave
         public void Save(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
             //https://msdn.microsoft.com/en-us/library/ms752244(v=vs.110).aspx
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            FileStream writer = new FileStream("Datafile.xml", FileMode.Create);
+            saveFileDialog.Title = "Save Map";
+            saveFileDialog.Filter = "Risk files (.risk)|*.risk";
+            saveFileDialog.DefaultExt = "risk";
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.ShowDialog();
+
+            FileStream writer = new FileStream(saveFileDialog.FileName, FileMode.Create);
             
             //Serialize the Record object to a memory stream using DataContractSerializer.
             DataContractSerializer serializer = new DataContractSerializer(typeof(Map));
@@ -61,9 +69,20 @@ namespace Risk.LoadSave
             //http://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
             //Define a map
             Map m;
-            //Read from file
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = false;
+            ofd.CheckFileExists = true;
+            ofd.DefaultExt = "risk";
+            ofd.SupportMultiDottedExtensions = false;
+            ofd.Title = "Load Map";
+            ofd.Filter = "Risk Files (.risk)|*.risk";
+
+
+            ofd.ShowDialog();
+            //Read from file 
             DataContractSerializer dcs = new DataContractSerializer(typeof(Map));
-            FileStream fs = new FileStream("Datafile.xml", FileMode.Open);
+            FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
             XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
             
             //Actual reading and assigning to map
