@@ -43,8 +43,7 @@ namespace Risk.ViewModel
         private Shape selectedShape;
         public Shape currentlySelected;
 
-
-
+        #region ICommand getters
         /*  UNDO/REDO   */
         public ICommand UndoCommand { get; }
         public ICommand RedoCommand { get; }
@@ -72,6 +71,7 @@ namespace Risk.ViewModel
         public ICommand CutCommand { get; }
         public ICommand CopyCommand { get; }
         public ICommand PasteCommand { get; }
+        #endregion
 
         public MainViewModel()
         {
@@ -156,7 +156,7 @@ namespace Risk.ViewModel
 
         private void Exit()
         {
-            throw new NotImplementedException();
+            Application.Current.Shutdown();
         }
 
         private void StartMap()
