@@ -37,6 +37,7 @@ namespace Risk.ViewModel
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         private bool isDragging = false;
+        public Shape currentlySelected;
 
 
         /*  UNDO/REDO   */
@@ -67,9 +68,9 @@ namespace Risk.ViewModel
         public ICommand CopyCommand { get; }
         public ICommand PasteCommand { get; }
 
+
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
 
             Shapes = new ObservableCollection<Shape>();
             Lines = new ObservableCollection<Line>();
@@ -80,15 +81,7 @@ namespace Risk.ViewModel
             AddShapeCommand = new RelayCommand(AddShape);
             AddLineCommand = new RelayCommand(AddLine);
             DeleteCommand = new RelayCommand(Delete);
-
-            // The commands are given the methods they should use to execute, and find out if they can execute.
-            /*
-             * 
-             * 
-             * MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
-             * MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
-             * MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
-             */
+            
             MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
@@ -262,31 +255,19 @@ namespace Risk.ViewModel
         private void addLineClick(MouseButtonEventArgs e)//A click that adds a line
         {
     Console.WriteLine("Test: MouseDownShape happened and isAddingLine==true");
-    //, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}
-    // Because a MouseUp event has happened and a Line is currently being drawn, 
-    //  the Shape that the Line is drawn from or to has been selected, and is here retrieved from the event parameters.
-    if (e.LeftButton == MouseButtonState.Pressed)
+   if (e.LeftButton == MouseButtonState.Pressed)
     {
         Console.WriteLine("Test: Mouse in Downstate");
         var shape = (Risk.Model.Shape)(((FrameworkElement)e.MouseDevice.Target).DataContext); //TargetShape(e);
 
-        // This checks if this is the first Shape chosen during the Line adding operation, 
-        //  by looking at the addingLineFrom variable, which is empty when no Shapes have previously been choosen.
-        // If this is the first Shape choosen, and if so, the Shape is saved in the AddingLineFrom variable.
-        //  Also the Shape is set as selected, to make it look different visually.
         if (_addingLineFrom == null) { _addingLineFrom = shape; _addingLineFrom.IsSelected = true; }
         // If this is not the first Shape choosen, and therefore the second, 
         //  it is checked that the first and second Shape are different.
         else if (_addingLineFrom.UID != shape.UID)
         {
-            // Now that it has been established that the Line adding operation has been completed succesfully by the user, 
-            //  a Line is added using an 'AddLineCommand', with a new Line given between the two shapes chosen.
             _undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = _addingLineFrom, To = shape }));
-            // The property used for visually indicating that a Line is being Drawn is cleared, 
-            //  so the View can return to its original and default apperance.
             _addingLineFrom.IsSelected = false;
-            // The 'isAddingLine' and 'addingLineFrom' variables are cleared, 
-            //  so the MainViewModel is ready for another Line adding operation.
+                    // The 'isAddingLine' and 'addingLineFrom' variables are cleared
             _isAddingLine = false;
             _addingLineFrom = null;
             // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
@@ -303,12 +284,6 @@ namespace Risk.ViewModel
             // The mouse position relative to the target of the mouse event.
             var mousePosition = RelativeMousePosition(e);
 
-            // When the shape is moved with the mouse, the MouseMoveShape method is called many times, 
-            //  for each part of the movement.
-            // Therefore to only have 1 Undo/Redo command saved for the whole movement, the initial position is saved, 
-            //  during the start of the movement, so that it together with the final position, 
-            //  from when the mouse is released, can become one Undo/Redo command.
-            // The initial shape position is saved to calculate the offset that the shape should be moved.
             initialMousePosition = mousePosition;
             initialShapePosition = new Point(shape.X, shape.Y);
 
@@ -329,14 +304,11 @@ namespace Risk.ViewModel
             shape.X = initialShapePosition.X;
             shape.Y = initialShapePosition.Y;
 
-            // Now that the Move Shape operation is over, the Shape is moved to the final position, 
-            //  by using a MoveNodeCommand to move it.
-            // The MoveNodeCommand is given the offset that it should be moved relative to its original position, 
-            //  and with respect to the Undo/Redo functionality the Shape has only been moved once, with this Command.
             _undoRedoController.AddAndExecute(new MoveShapeCommand(shape, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
 
             // The mouse is released, as the move operation is done, so it can be used by other controls.
             e.MouseDevice.Target.ReleaseMouseCapture();
+            //Indicates that drag has ended.
             isDragging = false;
         }
 

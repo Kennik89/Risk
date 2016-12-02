@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO MAKE THIS WORK
+//TOOD
+//TODO
+
 namespace Risk.Command
 {
     // Undo/Redo command for removing Lines.
@@ -14,15 +18,9 @@ namespace Risk.Command
         // Regions can be used to make code foldable (minus/plus sign to the left).
         #region Fields
 
-        // The 'lines' field holds the current collection of lines, 
-        //  and the reference points to the same collection as the one the MainViewModel point to, 
-        //  therefore when this collection is changed in a object of this class, 
-        //  it also changes the collection that the MainViewModel uses.
-        // For a description of an ObservableCollection see the MainViewModel class.
         private ObservableCollection<Line> lines;
 
-        // The 'linesToRemove' field holds a collection of existing lines, that are removed from the 'lines' collection, 
-        //  and if undone, they are added to the collection.
+        // The 'linesToRemove' field holds a collection of existing lines, that are removed from the 'lines' collection
         private List<Line> linesToRemove;
 
         #endregion

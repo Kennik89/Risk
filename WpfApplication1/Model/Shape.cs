@@ -33,6 +33,8 @@ namespace Risk.Model
         [DataMember]
         private double _height = 50;
 
+        private bool isSelected = false;
+
         public double X
         {
             get { return _x; }
