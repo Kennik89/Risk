@@ -33,7 +33,6 @@ namespace Risk.Model
         [DataMember]
         private double _height = 50;
 
-        private bool isSelected = false;
 
         public double X
         {
@@ -74,7 +73,7 @@ namespace Risk.Model
         public double CenterX => Width / 2;
         public double CenterY => Height / 2;
 
-        private bool _isSelected;
+        private bool _isSelected = false;
 
         public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
         public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
