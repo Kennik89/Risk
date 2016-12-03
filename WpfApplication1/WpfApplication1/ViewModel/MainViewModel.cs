@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,9 +39,11 @@ namespace Risk.ViewModel
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         private bool isDragging = false;
+        private bool isMarked = false;
+        private Shape selectedShape;
         public Shape currentlySelected;
 
-
+        #region ICommand getters
         /*  UNDO/REDO   */
         public ICommand UndoCommand { get; }
         public ICommand RedoCommand { get; }
@@ -68,7 +71,7 @@ namespace Risk.ViewModel
         public ICommand CutCommand { get; }
         public ICommand CopyCommand { get; }
         public ICommand PasteCommand { get; }
-
+        #endregion
 
         public MainViewModel()
         {
@@ -82,7 +85,7 @@ namespace Risk.ViewModel
             AddShapeCommand = new RelayCommand(AddShape);
             AddLineCommand = new RelayCommand(AddLine);
             DeleteCommand = new RelayCommand(Delete);
-            
+
             MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
@@ -96,6 +99,8 @@ namespace Risk.ViewModel
             CopyCommand = new RelayCommand(Copy);
             PasteCommand = new RelayCommand(Paste);
         }
+
+        /* METHOD THAT WILL BE CALLED WHEN THE BUTTON IS PRESSED */
 
         private void NewMap()
         {
@@ -117,16 +122,11 @@ namespace Risk.ViewModel
             }
         }
 
-        private void saveThread()
-        {
-            _serializer.Save(Shapes, Lines);
-        }
-
         private void SaveMap()
         {
-            // TODO: Need to test first
             try
             {
+                //_serializer.Save(Shapes, Lines);
                 ThreadStart save = new ThreadStart(saveThread);
                 Thread s = new Thread(save);
                 s.SetApartmentState(ApartmentState.STA);
@@ -135,6 +135,7 @@ namespace Risk.ViewModel
                 System.Threading.Thread.Sleep(10000);
                 Console.WriteLine("Main Thread waited 10s");
                 */
+
             }
 
             catch (SerializationException serExc)
@@ -157,7 +158,7 @@ namespace Risk.ViewModel
 
         private void Exit()
         {
-            throw new NotImplementedException();
+            Application.Current.Shutdown();
         }
 
         private void StartMap()
@@ -191,14 +192,21 @@ namespace Risk.ViewModel
         private void AddShape()
         {
             _undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
-            //undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape(100,100,100,100)));
         }
         private void Delete()
         {
+            //isMarked? -> lookUp(Shape or Line) -> call the remove
             throw new NotImplementedException();
 
             //DELETE CURRENTLYSELECTED
 
+        }
+
+        /* NON-BUTTON METHODS */
+
+        private void saveThread()
+        {
+            _serializer.Save(Shapes, Lines);
         }
 
         private Line TargetLine(MouseEventArgs e)
@@ -229,6 +237,7 @@ namespace Risk.ViewModel
             {
                 endDrag(e);
                 currentlySelected = TargetShape(e);
+
             }
         }
 
@@ -272,33 +281,39 @@ namespace Risk.ViewModel
             }
         }
 
-        private void addLineClick(MouseButtonEventArgs e)//A click that adds a line
+        private void addLineClick(MouseButtonEventArgs e) //A click that adds a line
         {
-    Console.WriteLine("Test: MouseDownShape happened and isAddingLine==true");
-   if (e.LeftButton == MouseButtonState.Pressed)
-    {
-        Console.WriteLine("Test: Mouse in Downstate");
-        var shape = (Risk.Model.Shape)(((FrameworkElement)e.MouseDevice.Target).DataContext); //TargetShape(e);
+            Console.WriteLine("Test: MouseDownShape happened and isAddingLine==true");
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Console.WriteLine("Test: Mouse in Downstate");
+                var shape = (Risk.Model.Shape) (((FrameworkElement) e.MouseDevice.Target).DataContext);
+                //TargetShape(e);
 
-        if (_addingLineFrom == null) { _addingLineFrom = shape; _addingLineFrom.IsSelected = true; }
-        // If this is not the first Shape choosen, and therefore the second, 
-        //  it is checked that the first and second Shape are different.
-        else if (_addingLineFrom.UID != shape.UID)
-        {
-            _undoRedoController.AddAndExecute(new AddLineCommand(Lines, new Line() { From = _addingLineFrom, To = shape }));
-            _addingLineFrom.IsSelected = false;
+                if (_addingLineFrom == null)
+                {
+                    _addingLineFrom = shape;
+                    _addingLineFrom.IsSelected = true;
+                }
+                // If this is not the first Shape choosen, and therefore the second, 
+                //  it is checked that the first and second Shape are different.
+                else if (_addingLineFrom.UID != shape.UID)
+                {
+                    _undoRedoController.AddAndExecute(new AddLineCommand(Lines,
+                        new Line() {From = _addingLineFrom, To = shape}));
+                    _addingLineFrom.IsSelected = false;
                     // The 'isAddingLine' and 'addingLineFrom' variables are cleared
-            _isAddingLine = false;
-            _addingLineFrom = null;
-            // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
-            //  so the View can return to its original and default apperance.
-            RaisePropertyChanged(() => ModeOpacity);
+                    _isAddingLine = false;
+                    _addingLineFrom = null;
+                    // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
+                    //  so the View can return to its original and default apperance.
+                    RaisePropertyChanged(() => ModeOpacity);
+                }
+            }
         }
-    }
-}
 
         private void startDrag(MouseButtonEventArgs e)
-        {
+            {
             // The Shape is gotten from the mouse event.
             var shape = TargetShape(e);
             // The mouse position relative to the target of the mouse event.
