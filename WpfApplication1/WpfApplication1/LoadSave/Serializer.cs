@@ -17,7 +17,7 @@ namespace Risk.LoadSave
     {
         public static _serializer Instance { get; } = new _serializer();
 
-        [STAThread]
+        [MTAThread]
         public void Save(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
             /*
@@ -86,7 +86,6 @@ namespace Risk.LoadSave
             ofd.Title = "Load Map";
             ofd.Filter = "Risk Files (.risk)|*.risk";
 
-
             ofd.ShowDialog();
 
             if (ofd.FileName.Length == 0)
@@ -106,8 +105,6 @@ namespace Risk.LoadSave
             reader.Close();
             fs.Close();
 
-            //Writing back to collections
-            //It is important that shapes are serialized first!
             foreach (Shape shape in m.countries)
             {
                 shapes.Add(shape);
@@ -117,8 +114,8 @@ namespace Risk.LoadSave
             {
                 lines.Add(new Line(line, shapes));
             }
-            //Console.WriteLine(lines.Count);
-            //End
+            
+            Console.WriteLine(lines.Count);
             return true;
         }
     }
