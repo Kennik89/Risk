@@ -7,8 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 //TODO MAKE THIS WORK
-//TOOD
-//TODO
 
 namespace Risk.Command
 {

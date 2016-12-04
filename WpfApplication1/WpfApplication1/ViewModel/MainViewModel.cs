@@ -39,9 +39,7 @@ namespace Risk.ViewModel
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         private bool isDragging = false;
-        private bool isMarked = false;
-        private Shape selectedShape;
-        public Shape currentlySelected;
+        private Shape _selectedObject;
 
         #region ICommand getters
         /*  UNDO/REDO   */
@@ -111,8 +109,6 @@ namespace Risk.ViewModel
 
         private void LoadMap()
         {
-            //NewMap();
-            // TODO: Need to test first
             if (_serializer.Load(Shapes, Lines))
             {
                 //Clearer undo-redo-stacken. Shapes og Lines bliver clearet i load,
@@ -126,7 +122,6 @@ namespace Risk.ViewModel
         {
             try
             {
-                //_serializer.Save(Shapes, Lines);
                 ThreadStart save = new ThreadStart(saveThread);
                 Thread s = new Thread(save);
                 s.SetApartmentState(ApartmentState.STA);
@@ -135,7 +130,6 @@ namespace Risk.ViewModel
                 System.Threading.Thread.Sleep(10000);
                 Console.WriteLine("Main Thread waited 10s");
                 */
-
             }
 
             catch (SerializationException serExc)
@@ -149,7 +143,6 @@ namespace Risk.ViewModel
                 "The serialization operation failed: {0} StackTrace: {1}",
                 exc.Message, exc.StackTrace);
             }
-
             finally
             {
                 Console.WriteLine("Serization Successed");
@@ -164,24 +157,24 @@ namespace Risk.ViewModel
         private void StartMap()
         {
             throw new NotImplementedException();
-        }
+        } // Not implemented yet
 
         private void Cut()
         {
             throw new NotImplementedException();
-        }
+        }      // Not implemented yet
 
         private void Copy()
         {
             throw new NotImplementedException();
-        }
+        }     // Not implemented yet
 
         private void Paste()
         {
             throw new NotImplementedException();
 
             //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
-        }
+        }    // Not implemented yet
 
         private void AddLine()
         {
@@ -193,12 +186,14 @@ namespace Risk.ViewModel
         {
             _undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
         }
-        private void Delete()
+
+        private void Delete()   // Not implemented yet
         {
             //isMarked? -> lookUp(Shape or Line) -> call the remove
-            throw new NotImplementedException();
-
-            //DELETE CURRENTLYSELECTED
+            if (_selectedObject != null)
+            {
+                _undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _selectedObject)); // Shape only
+            }
 
         }
 
@@ -216,7 +211,6 @@ namespace Risk.ViewModel
             // From the shapes visual element, the Shape object which is the DataContext is retrieved.
             return (Line)shapeVisualElement.DataContext;
         }
-
 
         private Shape TargetShape(MouseEventArgs e)
         {
@@ -236,9 +230,8 @@ namespace Risk.ViewModel
             if (isDragging)
             {
                 endDrag(e);
-                currentlySelected = TargetShape(e);
-
             }
+            _selectedObject = TargetShape(e);
         }
 
         private void MouseMoveShape(MouseEventArgs e)//If the mouse is getting moved
@@ -277,7 +270,6 @@ namespace Risk.ViewModel
             {
                 //Moving shape, if there is no line being added.
                 startDrag(e);
-
             }
         }
 
@@ -287,7 +279,7 @@ namespace Risk.ViewModel
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Console.WriteLine("Test: Mouse in Downstate");
-                var shape = (Risk.Model.Shape) (((FrameworkElement) e.MouseDevice.Target).DataContext);
+                var shape = (Shape) (((FrameworkElement) e.MouseDevice.Target).DataContext);
                 //TargetShape(e);
 
                 if (_addingLineFrom == null)
@@ -362,5 +354,6 @@ namespace Risk.ViewModel
             dynamic parent = VisualTreeHelper.GetParent(o);
             return parent.GetType().IsAssignableFrom(typeof(T)) ? parent : FindParentOfType<T>(parent);
         }
+
     }
 }
