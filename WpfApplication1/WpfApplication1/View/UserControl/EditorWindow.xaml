@@ -20,7 +20,7 @@
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
                 <Canvas>
-                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green">
+                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green" Cursor="Hand">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDown">
                                 <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
@@ -35,26 +35,7 @@
 
                     </Rectangle>
                 </Canvas>
-                <!--<Canvas>
-                <Rectangle Width="{Binding Width}" Height="{Binding Width}" Fill="Green"
-                          Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" >
-                    
-                </Rectangle>
-                </Canvas>-->
-
-                
-                <!--<local:CountryButton>
-                </local:CountryButton>-->
-                
-
-                <!--<local:CountryButton Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}">
-               >
-
-                </local:CountryButton>-->
-                <!--DataType="{x:Type model:dataContainer}">-->
-                <!-- <Viewbox:ShapeUserControl/>-->
             </DataTemplate>
-            
             <DataTemplate DataType="{x:Type model:Line}">
                 <Canvas>
                     <Line Stroke="Black" X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10" StrokeDashArray="2 1"/>

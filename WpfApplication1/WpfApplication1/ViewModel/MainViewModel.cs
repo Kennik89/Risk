@@ -39,8 +39,8 @@ namespace Risk.ViewModel
         // Saves the initial point that the mouse has during a move operation.
         private Point _initialMousePosition;
         private bool _isDragging = false;
-
-        private Shape _selectedShape;
+        private List<Shape> _selectedShape;
+        private List<Shape> _holdingShape;
 
         #region ICommand getters
         /*  UNDO/REDO   */
@@ -74,7 +74,6 @@ namespace Risk.ViewModel
 
         public MainViewModel()
         {
-
             Shapes = new ObservableCollection<Shape>();
             Lines = new ObservableCollection<Line>();
 
@@ -166,11 +165,19 @@ namespace Risk.ViewModel
 
         private void Copy()
         {
+            if (_selectedShape != null)
+            {
+                _holdingShape = _selectedShape;
+            }
             throw new NotImplementedException();
         }     // Not implemented yet
 
         private void Paste()
         {
+            List<Line> _holdingLines;
+            _holdingLines = Lines.Where(x => _holdingShape.Any(y => y.UID == x.From.UID || y.UID == x.To.UID)).ToList();
+            //_undoRedoController.AddAndExecute(new PasteCommand(Shapes, new Shape()));
+
             throw new NotImplementedException();
 
             //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
@@ -230,7 +237,8 @@ namespace Risk.ViewModel
             {
                 endDrag(e);
             }
-            _selectedShape = TargetShape(e);
+            _selectedShape.Clear();
+            _selectedShape.Add(TargetShape(e));
             //_selectedLine = TargetLine(e); 
         }
 
