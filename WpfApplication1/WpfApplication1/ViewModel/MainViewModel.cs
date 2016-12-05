@@ -33,15 +33,19 @@ namespace Risk.ViewModel
         // Used for saving the shape that a line is drawn from, while it is being drawn.
         private Shape _addingLineFrom;
 
+        //Used when no shape is selected. Thus, when no shape is selected, this is used.
+        private Shape dummyShape = new Shape(0, 0, 0, 0);
+
         public double ModeOpacity => _isAddingLine ? 0.4 : 1.0;
         // Saves the initial point that the shape has during a move operation.
         private Point initialShapePosition;
         // Saves the initial point that the mouse has during a move operation.
         private Point initialMousePosition;
         private bool isDragging = false;
-        private bool isMarked = false;
-        private Shape selectedShape;
-        public Shape currentlySelected;
+        private bool isMarked = false;//Indicates if something is marked
+        private bool isMarkedShape = false;//Indicates if it is a shape or a line that's marked (For data in the side)
+        private Shape selectedShape;//A marked shape
+        private Line selectedLine;//A marked Line
 
         #region ICommand getters
         /*  UNDO/REDO   */
@@ -98,6 +102,9 @@ namespace Risk.ViewModel
             CutCommand = new RelayCommand(Cut);
             CopyCommand = new RelayCommand(Copy);
             PasteCommand = new RelayCommand(Paste);
+
+            //Sets the selected shape
+            selectedShape = dummyShape;
         }
 
         /* METHOD THAT WILL BE CALLED WHEN THE BUTTON IS PRESSED */
