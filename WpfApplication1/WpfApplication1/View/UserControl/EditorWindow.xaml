@@ -10,7 +10,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:vm="clr-namespace:Risk.ViewModel"
-             
+             xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -21,7 +21,7 @@
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
                 <Canvas>
-                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green">
+                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green" Cursor="Hand">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDown">
                                 <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
@@ -63,7 +63,7 @@
 
             <DataTemplate DataType="{x:Type model:Line}">
                 <Canvas>
-                    <Line Stroke="Black" X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10" StrokeDashArray="2 1">
+                    <Line Stroke="Black" X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10" StrokeDashArray="2 1" Cursor="Hand" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDown">
                                 <cmd:EventToCommand Command="{Binding DataContext.MouseDownLineCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
@@ -80,11 +80,7 @@
                             <DropShadowEffect Color="White" Opacity="{Binding IsSelected}" BlurRadius="10" ShadowDepth="0"/>
                         </Line.Effect>
                     </Line>
-                    
                 </Canvas>
-                <!--DataType="{x:Type model:dataContainer}">-->
-                <!-- <Viewbox:ShapeUserControl/>-->
-                
             </DataTemplate>
 
         </ResourceDictionary>

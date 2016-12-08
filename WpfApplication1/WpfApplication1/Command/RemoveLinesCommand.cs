@@ -15,16 +15,22 @@ namespace Risk.Command
     {
         #region Fields
 
-        private ObservableCollection<Line> lines;
-        private List<Line> linesToRemove;
+        private ObservableCollection<Line> _lines;
+        private List<Line> _linesToRemove;
         #endregion
 
         #region Constructor
 
-        public RemoveLinesCommand(ObservableCollection<Line> _lines, List<Line> _linesToRemove)
+        public RemoveLinesCommand(ObservableCollection<Line> lines, List<Line> linesToRemove)
         {
-            lines = _lines;
-            linesToRemove = _linesToRemove;
+            _lines = lines;
+            _linesToRemove = linesToRemove;
+        }
+
+        public RemoveLinesCommand(ObservableCollection<Line> lines, Line lineToRemove)
+        {
+            _lines = lines;
+            _linesToRemove = new List<Line>(1) {lineToRemove};
         }
 
         #endregion
@@ -34,13 +40,13 @@ namespace Risk.Command
         // For doing and redoing the command.
         public void Execute()
         {
-            linesToRemove.ForEach(x => lines.Remove(x));
+            _linesToRemove.ForEach(x => _lines.Remove(x));
         }
 
         // For undoing the command.
         public void UnExecute()
         {
-            linesToRemove.ForEach(x => lines.Add(x));
+            _linesToRemove.ForEach(x => _lines.Add(x));
         }
 
         #endregion
