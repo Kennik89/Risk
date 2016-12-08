@@ -35,11 +35,12 @@ namespace Risk.ViewModel
 
         public double ModeOpacity => _isAddingLine ? 0.4 : 1.0;
         // Saves the initial point that the shape has during a move operation.
-        private Point initialShapePosition;
+        private Point _initialShapePosition;
         // Saves the initial point that the mouse has during a move operation.
-        private Point initialMousePosition;
-        private bool isDragging = false;
-        private Shape _selectedObject;
+        private Point _initialMousePosition;
+        private bool _isDragging = false;
+        private Shape _selectedShape;
+        private Shape _holdingShape;
 
         #region ICommand getters
         /*  UNDO/REDO   */
@@ -73,7 +74,6 @@ namespace Risk.ViewModel
 
         public MainViewModel()
         {
-
             Shapes = new ObservableCollection<Shape>();
             Lines = new ObservableCollection<Line>();
 
@@ -99,7 +99,6 @@ namespace Risk.ViewModel
         }
 
         /* METHOD THAT WILL BE CALLED WHEN THE BUTTON IS PRESSED */
-
         private void NewMap()
         {
             Lines.Clear();
@@ -166,14 +165,20 @@ namespace Risk.ViewModel
 
         private void Copy()
         {
-            throw new NotImplementedException();
-        }     // Not implemented yet
+            if (_selectedShape != null)
+            {
+                _holdingShape = _selectedShape;
+            }
+        }
 
         private void Paste()
         {
-            throw new NotImplementedException();
+          
+            //_holdingLines = Lines.Where(x => _holdingShape.Any(y => y.UID == x.From.UID || y.UID == x.To.UID)).ToList(); // List<Shape>
+            //_undoRedoController.AddAndExecute(new PasteCommand(Shapes, new Shape()));
 
             //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
+            _undoRedoController.AddAndExecute(new PasteShapeCommand(Shapes, Lines, _holdingShape, new Shape()));
         }    // Not implemented yet
 
         private void AddLine()
@@ -187,12 +192,11 @@ namespace Risk.ViewModel
             _undoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new Shape()));
         }
 
-        private void Delete()   // Not implemented yet
+        private void Delete() 
         {
-            //isMarked? -> lookUp(Shape or Line) -> call the remove
-            if (_selectedObject != null)
+            if (_selectedShape != null)
             {
-                _undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _selectedObject)); // Shape only
+                _undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _selectedShape)); // Shape only
             }
 
         }
@@ -204,7 +208,7 @@ namespace Risk.ViewModel
             _serializer.Save(Shapes, Lines);
         }
 
-        private Line TargetLine(MouseEventArgs e)
+        private Line TargetLine(MouseEventArgs e) // InvalidCastException is thrown when execute here
         {
             // Here the visual element that the mouse is captured by is retrieved.
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
@@ -227,16 +231,17 @@ namespace Risk.ViewModel
 
         private void MouseUpShape(MouseButtonEventArgs e)
         {
-            if (isDragging)
+            if (_isDragging)
             {
                 endDrag(e);
             }
-            _selectedObject = TargetShape(e);
+            _selectedShape = TargetShape(e);
+            //_selectedLine = TargetLine(e); 
         }
 
         private void MouseMoveShape(MouseEventArgs e)//If the mouse is getting moved
         {
-            if (isDragging)
+            if (_isDragging)
             {
                 // The Shape is gotten from the mouse event.
                 var shape = TargetShape(e);
@@ -245,17 +250,13 @@ namespace Risk.ViewModel
 
                 // The Shape is moved by the offset between the original and current mouse position.
                 // The View (GUI) is then notified by the Shape, that its properties have changed.
-                shape.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
-                shape.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+                shape.X = _initialShapePosition.X + (mousePosition.X - _initialMousePosition.X);
+                shape.Y = _initialShapePosition.Y + (mousePosition.Y - _initialMousePosition.Y);
             }
         }
 
-
-
-
         public void MouseDownShape(MouseButtonEventArgs e)
         {
-
             //CountryButton b = (CountryButton)sender;
             //            Canvas c = (Canvas)b.Parent;
 
@@ -311,14 +312,14 @@ namespace Risk.ViewModel
             // The mouse position relative to the target of the mouse event.
             var mousePosition = RelativeMousePosition(e);
 
-            initialMousePosition = mousePosition;
-            initialShapePosition = new Point(shape.X, shape.Y);
+            _initialMousePosition = mousePosition;
+            _initialShapePosition = new Point(shape.X, shape.Y);
 
             // The mouse is captured, so the current shape will always be the target of the mouse events, 
             //  even if the mouse is outside the application window.
             e.MouseDevice.Target.CaptureMouse();
 
-            isDragging = true;
+            _isDragging = true;
         }
 
         private void endDrag(MouseButtonEventArgs e)
@@ -328,15 +329,15 @@ namespace Risk.ViewModel
             // The mouse position relative to the target of the mouse event.
             var mousePosition = RelativeMousePosition(e);
             // The Shape is moved back to its original position, so the offset given to the move command works.
-            shape.X = initialShapePosition.X;
-            shape.Y = initialShapePosition.Y;
+            shape.X = _initialShapePosition.X;
+            shape.Y = _initialShapePosition.Y;
 
-            _undoRedoController.AddAndExecute(new MoveShapeCommand(shape, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
+            _undoRedoController.AddAndExecute(new MoveShapeCommand(shape, mousePosition.X - _initialMousePosition.X, mousePosition.Y - _initialMousePosition.Y));
 
             // The mouse is released, as the move operation is done, so it can be used by other controls.
             e.MouseDevice.Target.ReleaseMouseCapture();
             //Indicates that drag has ended.
-            isDragging = false;
+            _isDragging = false;
         }
 
         private Point RelativeMousePosition(MouseEventArgs e)
