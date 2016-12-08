@@ -13,41 +13,60 @@ namespace Risk.Command
 
         private ObservableCollection<Shape> _shapes;
         private ObservableCollection<Line> _lines;
-        private List<Shape> _shapesToAdd;
-        private List<Line> _linesToAdd;
+        private Shape _oldShape;
+        private Shape _newShape;
+        private List<Shape> _connectedShapes;
+        private List<Line> _oldLines;
+        private List<Line> _newLines;
 
-        public PasteShapeCommand(ObservableCollection<Shape> shapes, List<Shape> shape)
+        /*        public PasteShapeCommand(ObservableCollection<Shape> shapes, List<Shape> shape)
+                {
+                    _shapes = shapes;
+                    _oldShapes = shape;
+                }*/
+
+        public PasteShapeCommand(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines, Shape oldShape, Shape newShape)
         {
             _shapes = shapes;
-            _shapesToAdd = shape;
+            _lines = lines;
+            _oldShape = oldShape;
+            _newShape = newShape;
+            CollectConnectedShapes();
+            _newLines = new List<Line>();
         }
 
-        public PasteShapeCommand(ObservableCollection<Shape> shapes, Shape shape)
+        private void CollectConnectedShapes()
         {
-            _shapes = shapes;
-            _shapesToAdd = new List<Shape> { shape };
-        }
+            _connectedShapes = new List<Shape>();
+            _oldLines = new List<Line>();
+            _oldLines = _lines.Where(x => _oldShape.UID == x.From.UID || _oldShape.UID == x.To.UID).ToList();
 
-        private void collectLines(List<Shape> shapes)
-        {
+            foreach (var l in _oldLines)
+            {
+                if (l.To == _oldShape)
+                {
+                    _connectedShapes.Add(l.From);
+                }
+                else if (l.From == _oldShape)
+                {
+                    _connectedShapes.Add(l.To);
+                }
+            }
         }
 
         public void Execute()
         {
-            foreach (Shape shape in _shapesToAdd)
+            _shapes.Add(_newShape);
+            foreach (Shape s in _connectedShapes)
             {
-
-                _linesToAdd.ForEach(x => _lines.Remove(x));
-                _shapes.Remove(shape);
+                _newLines.Add(new Line() { From = _newShape, To = s });
             }
+            _newLines.ForEach(x => _lines.Add(x));
         }
         public void UnExecute()
         {
-            foreach (Shape shape in _shapesToAdd)
-            {
-                _linesToAdd.ForEach(x => _lines.Add(x));
-                _shapes.Add(shape);
-            }
+            _newLines.ForEach(x => _lines.Remove(x));
+            _shapes.Remove(_newShape);
         }
 
     }
