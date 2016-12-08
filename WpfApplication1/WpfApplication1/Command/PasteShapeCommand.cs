@@ -30,16 +30,24 @@ namespace Risk.Command
 
         private void collectLines(List<Shape> shapes)
         {
-            
         }
 
         public void Execute()
         {
-            _shapes.Add(shape);
+            foreach (Shape shape in _shapesToAdd)
+            {
+
+                _linesToAdd.ForEach(x => _lines.Remove(x));
+                _shapes.Remove(shape);
+            }
         }
         public void UnExecute()
         {
-            _shapes.Remove(shape);
+            foreach (Shape shape in _shapesToAdd)
+            {
+                _linesToAdd.ForEach(x => _lines.Add(x));
+                _shapes.Add(shape);
+            }
         }
 
     }

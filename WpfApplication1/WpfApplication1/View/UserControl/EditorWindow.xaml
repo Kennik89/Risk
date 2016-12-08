@@ -9,6 +9,7 @@
              xmlns:local="clr-namespace:Risk.View.UserControl"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -38,7 +39,7 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type model:Line}">
                 <Canvas>
-                    <Line Stroke="Black" X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10" StrokeDashArray="2 1"/>
+                    <Line X1="{Binding From.CanvasCenterX}" Y1="{Binding From.CanvasCenterY}" X2="{Binding To.CanvasCenterX}" Y2="{Binding To.CanvasCenterY}" StrokeThickness="10" StrokeDashArray="2 1" Cursor="Hand" Stroke="Black"/>
                 </Canvas>
                 <!--DataType="{x:Type model:dataContainer}">-->
                 <!-- <Viewbox:ShapeUserControl/>-->
