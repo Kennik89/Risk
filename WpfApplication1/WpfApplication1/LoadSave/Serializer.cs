@@ -17,7 +17,7 @@ namespace Risk.LoadSave
     {
         public static _serializer Instance { get; } = new _serializer();
 
-        [MTAThread]
+        [STAThread]
         public void Save(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
             /*
@@ -32,6 +32,11 @@ namespace Risk.LoadSave
             saveFileDialog.DefaultExt = "risk";
             saveFileDialog.AddExtension = true;
             saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName.Length == 0)
+            {
+                return;
+            }
 
             FileStream writer = new FileStream(saveFileDialog.FileName, FileMode.Create);
             

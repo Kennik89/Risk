@@ -33,8 +33,6 @@ namespace Risk.Model
         [DataMember]
         private double _height = 50;
 
-        private bool _isSelected = false;
-
         public double X
         {
             get { return _x; }
@@ -74,8 +72,13 @@ namespace Risk.Model
         public double CenterX => Width / 2;
         public double CenterY => Height / 2;
 
-        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
-        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
+
+        //This indicates whether it is marked or not. This has to be a double,
+        //Since it binds to the wpf, where opacity for the "glow" is either 1
+        //(Visible) or 0 (Invisible)
+        private double _isSelected = 0;
+        public double IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(); } }
+
 
         public Shape(double posX, double posY, double posHeight, double posWidth)
         {

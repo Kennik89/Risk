@@ -16,7 +16,6 @@ using System.Windows.Media;
 using Risk.Model;
 using Risk.Command;
 using Risk.LoadSave;
-using System.Threading;
 
 namespace Risk.ViewModel
 {
@@ -24,6 +23,10 @@ namespace Risk.ViewModel
     {
         public ObservableCollection<Shape> Shapes { get; set; }
         public ObservableCollection<Line> Lines { get; set; }
+
+
+        //this is for the temporary line used while adding a line
+        public ObservableCollection<Line> TempLines { get; set; }
 
         // Enable to call the methods from those classes
         private _serializer _serializer = _serializer.Instance;
@@ -33,13 +36,27 @@ namespace Risk.ViewModel
         // Used for saving the shape that a line is drawn from, while it is being drawn.
         private Shape _addingLineFrom;
 
+        //Used when no shape is selected. Thus, when no shape is selected, this is used.
+        private Shape dummyShape = new Shape(0, 0, 0, 0);
+
+        private Shape tempLineShape = new Shape(0,0,0,0);
+        //For templine: To will always be tempLineShape, placed to follow the mouse
+        //From will be the starting point of the new line.
+        private Line tempLine = new Line();
+        private bool tempLineInUse = false;
+
         public double ModeOpacity => _isAddingLine ? 0.4 : 1.0;
         // Saves the initial point that the shape has during a move operation.
         private Point _initialShapePosition;
         // Saves the initial point that the mouse has during a move operation.
-        private Point _initialMousePosition;
-        private bool _isDragging = false;
-        private Shape _selectedShape;
+        private Point initialMousePosition;
+        private bool isDragging = false;
+        private bool isMarked = false;//Indicates if something is marked
+        private bool isMarkedShape = false;//Indicates if it is a shape or a line that's marked (For data in the side)
+        private Shape selectedShape;//A marked shape
+        private Line selectedLine;//A marked Line
+        //private Shape _selectedObject;
+//        private Shape _selectedShape;
         private Shape _holdingShape;
 
         #region ICommand getters
@@ -56,6 +73,16 @@ namespace Risk.ViewModel
         public ICommand MouseDownShapeCommand { get; }
         public ICommand MouseMoveShapeCommand { get; }
         public ICommand MouseUpShapeCommand { get; }
+
+        //Line clicks
+        public ICommand MouseDownLineCommand { get; }
+        public ICommand MouseMoveLineCommand { get; }
+        public ICommand MouseUpLineCommand { get; }
+
+        //Canvas clicks
+        public ICommand MouseDownCanvasCommand { get; }
+        public ICommand MouseMoveCanvasCommand { get; }
+        public ICommand MouseUpCanvasCommand { get; }
 
         /*  FILE MENU CONTROLLER */
         public ICommand NewMapCommand { get; }
@@ -88,6 +115,14 @@ namespace Risk.ViewModel
             MouseMoveShapeCommand = new RelayCommand<MouseEventArgs>(MouseMoveShape);
             MouseUpShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpShape);
 
+            MouseDownLineCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownLine);
+            MouseMoveLineCommand = new RelayCommand<MouseEventArgs>(MouseMoveLine);
+            MouseUpLineCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpLine);
+
+            MouseDownCanvasCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownCanvas);
+            MouseMoveCanvasCommand = new RelayCommand<MouseEventArgs>(MouseMoveCanvas);
+            MouseUpCanvasCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpCanvas);
+
             NewMapCommand = new RelayCommand(NewMap);
             LoadMapCommand = new RelayCommand(LoadMap);
             SaveMapCommand = new RelayCommand(SaveMap);
@@ -96,6 +131,15 @@ namespace Risk.ViewModel
             CutCommand = new RelayCommand(Cut);
             CopyCommand = new RelayCommand(Copy);
             PasteCommand = new RelayCommand(Paste);
+
+            //Sets the selected shape
+            selectedShape = dummyShape;
+            //Assigns the temporary line
+
+            TempLines = new ObservableCollection<Line>();
+            tempLine.To = tempLineShape;
+            tempLine.From = tempLineShape;
+            TempLines.Add(tempLine);
         }
 
         /* METHOD THAT WILL BE CALLED WHEN THE BUTTON IS PRESSED */
@@ -165,9 +209,9 @@ namespace Risk.ViewModel
 
         private void Copy()
         {
-            if (_selectedShape != null)
+            if (selectedShape != null)
             {
-                _holdingShape = _selectedShape;
+                _holdingShape = selectedShape;
             }
         }
 
@@ -194,9 +238,15 @@ namespace Risk.ViewModel
 
         private void Delete() 
         {
-            if (_selectedShape != null)
+            //isMarked? -> lookUp(Shape or Line) -> call the remove
+            if (isMarked && isMarkedShape && selectedShape != null)
             {
-                _undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, _selectedShape)); // Shape only
+                _undoRedoController.AddAndExecute(new RemoveShapesCommand(Shapes, Lines, selectedShape)); // Shape only
+            } else if (isMarked && !isMarkedShape && selectedLine != null)
+            {
+                List<Line> removingLines = new List<Line>();
+                removingLines.Add(selectedLine);
+                _undoRedoController.AddAndExecute(new RemoveLinesCommand(Lines, removingLines));
             }
 
         }
@@ -208,7 +258,7 @@ namespace Risk.ViewModel
             _serializer.Save(Shapes, Lines);
         }
 
-        private Line TargetLine(MouseEventArgs e) // InvalidCastException is thrown when execute here
+        private Line TargetLine(MouseEventArgs e)//Brugt til at fange linjen
         {
             // Here the visual element that the mouse is captured by is retrieved.
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
@@ -231,17 +281,25 @@ namespace Risk.ViewModel
 
         private void MouseUpShape(MouseButtonEventArgs e)
         {
-            if (_isDragging)
+            Console.WriteLine("MouseUpShape");
+            if (isDragging)
             {
                 endDrag(e);
+                isMarkedShape = true;//Indicates that the marked object is a Shape
+                isMarked = true;//Indicates that something is marked
+                                //removes glow from previous
+                removeOldGlow();
+                //Selects shape
+                selectedShape = TargetShape(e);
+                //Sets glow on current
+                selectedShape.IsSelected = 1;
             }
-            _selectedShape = TargetShape(e);
-            //_selectedLine = TargetLine(e); 
+            e.Handled = true;
         }
 
         private void MouseMoveShape(MouseEventArgs e)//If the mouse is getting moved
         {
-            if (_isDragging)
+            if (isDragging)
             {
                 // The Shape is gotten from the mouse event.
                 var shape = TargetShape(e);
@@ -250,9 +308,14 @@ namespace Risk.ViewModel
 
                 // The Shape is moved by the offset between the original and current mouse position.
                 // The View (GUI) is then notified by the Shape, that its properties have changed.
-                shape.X = _initialShapePosition.X + (mousePosition.X - _initialMousePosition.X);
-                shape.Y = _initialShapePosition.Y + (mousePosition.Y - _initialMousePosition.Y);
+                shape.X = _initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
+                shape.Y = _initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+            } else if (tempLineInUse)
+            {
+                tempLine.To = TargetShape(e);
             }
+            e.Handled = true;
+
         }
 
         public void MouseDownShape(MouseButtonEventArgs e)
@@ -272,6 +335,89 @@ namespace Risk.ViewModel
                 //Moving shape, if there is no line being added.
                 startDrag(e);
             }
+            e.Handled = true;
+        }
+
+        private void removeOldGlow()
+        {
+            if (selectedLine != null)
+            {
+                selectedLine.IsSelected = 0;
+            }
+            if (selectedShape != null)
+            {
+                selectedShape.IsSelected = 0;
+            }
+        }
+
+        private void MouseDownLine(MouseButtonEventArgs e)
+        {
+            //Removes glow from other lines
+            removeOldGlow();
+
+            isMarkedShape = false;//Indicates that the marked object is not a shape (it is then a line)
+            isMarked = true;//Indicates that something is marked
+
+            //Selects new line.
+            selectedLine = TargetLine(e);
+            selectedLine.IsSelected = 1;
+            e.MouseDevice.Target.CaptureMouse();
+            e.Handled = true;
+
+        }
+        private void MouseUpLine(MouseButtonEventArgs e)
+        {
+            Console.WriteLine("MouseUpLine");
+            e.MouseDevice.Target.ReleaseMouseCapture();
+            e.Handled = true;
+
+        }
+        private void MouseMoveLine(MouseEventArgs e)
+        {
+            if (_isAddingLine && tempLineInUse)
+            {
+                if (!(tempLine.To == tempLineShape))
+                {
+                    tempLine.To = tempLineShape;
+                }
+                Point pos = RelativeMousePositionCanvas(e);
+                tempLineShape.X = pos.X;
+                tempLineShape.Y = pos.Y;
+            }
+            e.Handled = true;
+
+        }
+
+        private void MouseDownCanvas(MouseButtonEventArgs e)
+        {
+            //Removes glow from other lines
+            removeOldGlow();
+            isMarked = false;
+            e.Handled = true;
+
+        }
+        private void MouseUpCanvas(MouseButtonEventArgs e)
+        {
+            Console.WriteLine("MouseUpCanvas");
+            e.MouseDevice.Target.ReleaseMouseCapture();
+            e.Handled = true;
+
+        }
+        private void MouseMoveCanvas(MouseEventArgs e)
+        {
+            if (_isAddingLine && tempLineInUse)
+            {
+                if (!(tempLine.To == tempLineShape)){
+                    tempLine.To = tempLineShape;
+                }
+
+                Point pos = RelativeMousePositionCanvas(e);
+                tempLineShape.X = pos.X;
+                tempLineShape.Y = pos.Y;
+            }
+            e.Handled = true;
+
+            //Do nothing right now
         }
 
         private void addLineClick(MouseButtonEventArgs e) //A click that adds a line
@@ -280,46 +426,56 @@ namespace Risk.ViewModel
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Console.WriteLine("Test: Mouse in Downstate");
-                var shape = (Shape) (((FrameworkElement) e.MouseDevice.Target).DataContext);
+                var shape = (Shape)(((FrameworkElement)e.MouseDevice.Target).DataContext);
                 //TargetShape(e);
 
                 if (_addingLineFrom == null)
                 {
                     _addingLineFrom = shape;
-                    _addingLineFrom.IsSelected = true;
+                    _addingLineFrom.IsSelected = 1;
+                    Point pos = RelativeMousePosition(e);
+                    tempLine.From = shape;
+                    tempLineShape.X = pos.X;
+                    tempLineShape.Y = pos.Y;
+                    tempLineInUse = true;
                 }
                 // If this is not the first Shape choosen, and therefore the second, 
                 //  it is checked that the first and second Shape are different.
                 else if (_addingLineFrom.UID != shape.UID)
                 {
                     _undoRedoController.AddAndExecute(new AddLineCommand(Lines,
-                        new Line() {From = _addingLineFrom, To = shape}));
-                    _addingLineFrom.IsSelected = false;
+                        new Line() { From = _addingLineFrom, To = shape }));
+                    _addingLineFrom.IsSelected = 0;
                     // The 'isAddingLine' and 'addingLineFrom' variables are cleared
                     _isAddingLine = false;
                     _addingLineFrom = null;
                     // The property used for visually indicating which Shape has already chosen are choosen is cleared, 
                     //  so the View can return to its original and default apperance.
                     RaisePropertyChanged(() => ModeOpacity);
+
+                    tempLine.From = tempLineShape;
+                    tempLine.To = tempLineShape;
+                    //Marks that the temporary line isn't in use.
+                    tempLineInUse = false;
                 }
             }
         }
 
         private void startDrag(MouseButtonEventArgs e)
-            {
+        {
             // The Shape is gotten from the mouse event.
             var shape = TargetShape(e);
             // The mouse position relative to the target of the mouse event.
             var mousePosition = RelativeMousePosition(e);
 
-            _initialMousePosition = mousePosition;
+            initialMousePosition = mousePosition;
             _initialShapePosition = new Point(shape.X, shape.Y);
 
             // The mouse is captured, so the current shape will always be the target of the mouse events, 
             //  even if the mouse is outside the application window.
             e.MouseDevice.Target.CaptureMouse();
 
-            _isDragging = true;
+            isDragging = true;
         }
 
         private void endDrag(MouseButtonEventArgs e)
@@ -332,12 +488,12 @@ namespace Risk.ViewModel
             shape.X = _initialShapePosition.X;
             shape.Y = _initialShapePosition.Y;
 
-            _undoRedoController.AddAndExecute(new MoveShapeCommand(shape, mousePosition.X - _initialMousePosition.X, mousePosition.Y - _initialMousePosition.Y));
+            _undoRedoController.AddAndExecute(new MoveShapeCommand(shape, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
 
             // The mouse is released, as the move operation is done, so it can be used by other controls.
             e.MouseDevice.Target.ReleaseMouseCapture();
             //Indicates that drag has ended.
-            _isDragging = false;
+            isDragging = false;
         }
 
         private Point RelativeMousePosition(MouseEventArgs e)
@@ -350,6 +506,14 @@ namespace Risk.ViewModel
             return Mouse.GetPosition(canvas);
         }
 
+        private Point RelativeMousePositionCanvas(MouseEventArgs e)
+        {
+            // Here the visual element that the mouse is captured by is retrieved.
+            var canvas = (FrameworkElement)e.MouseDevice.Target;
+            // The mouse position relative to the canvas is gotten here.
+            return Mouse.GetPosition(canvas);
+        }
+
         private static T FindParentOfType<T>(DependencyObject o)
         {
             dynamic parent = VisualTreeHelper.GetParent(o);
@@ -357,4 +521,5 @@ namespace Risk.ViewModel
         }
 
     }
+
 }
