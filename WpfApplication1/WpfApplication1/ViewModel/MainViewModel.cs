@@ -38,6 +38,7 @@ namespace Risk.ViewModel
 
         //Used when no shape is selected. Thus, when no shape is selected, this is used.
         private Shape dummyShape = new Shape(0, 0, 0, 0);
+
         private Shape tempLineShape = new Shape(0,0,0,0);
         //For templine: To will always be tempLineShape, placed to follow the mouse
         //From will be the starting point of the new line.
@@ -52,16 +53,10 @@ namespace Risk.ViewModel
         private bool isDragging = false;
         private bool isMarked = false;//Indicates if something is marked
         private bool isMarkedShape = false;//Indicates if it is a shape or a line that's marked (For data in the side)
-        public Shape selectedShape;//A marked shape
+        private Shape selectedShape;//A marked shape
         private Line selectedLine;//A marked Line
-        public String _someString = "";
-        public String someString
-        {
-            get { return this._someString; }
-            set { this._someString = value; }
-        }
         //private Shape _selectedObject;
-        //        private Shape _selectedShape;
+//        private Shape _selectedShape;
         private Shape _holdingShape;
 
         #region ICommand getters
