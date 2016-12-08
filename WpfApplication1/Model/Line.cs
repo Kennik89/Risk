@@ -5,16 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Risk.Model
 {
     public class Line : NotifyBase
     {
-        private Shape from;
-        public Shape From { get { return from; } set { from = value; NotifyPropertyChanged(); } }
+        private Shape _from;
+        public Shape From { get { return _from; } set { _from = value; NotifyPropertyChanged(); } }
 
-        private Shape to;
-        public Shape To { get { return to; } set { to = value; NotifyPropertyChanged(); } }
+        private Shape _to;
+        public Shape To { get { return _to; } set { _to = value; NotifyPropertyChanged(); } }
+
+        
+        public double _isSelected = 0;
+        public double IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(); } }
 
         //DO NOT DELETE EMPTY CONSTRUCTOR
         public Line()
@@ -33,11 +36,11 @@ namespace Risk.Model
             {
                 if (l.IDfrom == s.UID)
                 {
-                    from = s;
+                    _from = s;
                     toFound = true;
                 } else if (l.IDto == s.UID)
                 {
-                    to = s;
+                    _to = s;
                     fromFound = true;
                 }
             }
