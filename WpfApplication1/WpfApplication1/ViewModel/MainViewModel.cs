@@ -173,12 +173,12 @@ namespace Risk.ViewModel
 
         private void Paste()
         {
-            List<Line> _holdingLines;
-            _holdingLines = Lines.Where(x => _holdingShape.UID == x.From.UID || _holdingShape.UID == x.To.UID).ToList(); // Shape 
+          
             //_holdingLines = Lines.Where(x => _holdingShape.Any(y => y.UID == x.From.UID || y.UID == x.To.UID)).ToList(); // List<Shape>
             //_undoRedoController.AddAndExecute(new PasteCommand(Shapes, new Shape()));
 
             //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
+            _undoRedoController.AddAndExecute(new PasteShapeCommand(Shapes, Lines, _holdingShape, new Shape()));
         }    // Not implemented yet
 
         private void AddLine()
