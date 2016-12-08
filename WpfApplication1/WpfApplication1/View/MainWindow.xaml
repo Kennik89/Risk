@@ -5,7 +5,54 @@
         xmlns:uc="clr-namespace:Risk.View.UserControl"
         xmlns:viewModel="clr-namespace:Risk.ViewModel"
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
+    <Window.InputBindings>
+        <KeyBinding 
+                Command="{Binding NewMapCommand}"
+                Key="N"
+                Modifiers="Control"/>
+        <KeyBinding 
+                Command="{Binding LoadMapCommand}"
+                Key="L"
+                Modifiers="Control"/>
+        <KeyBinding 
+                Command="{Binding SaveMapCommand}"
+                Key="S"
+                Modifiers="Control"/>
+        <KeyBinding 
+                Command="{Binding StartCommand}"
+                Key="P"
+                Modifiers="Control"/>
+        <KeyBinding
+            Command="{Binding UndoCommand}"
+                Key="Z"
+                Modifiers="Control"/>
+        <KeyBinding 
+                Command="{Binding RedoCommand}"
+                Key="Y"
+                Modifiers="Control"/>
+        <KeyBinding
+            Command="{Binding CopyCommand}"
+                Key="C"
+                Modifiers="Control"/>
+        <KeyBinding 
+                Command="{Binding PasteCommand}"
+                Key="V"
+                Modifiers="Control"/>
+        <KeyBinding
+            Command="{Binding AddShapeCommand}"
+                Key="Q"
+                Modifiers="Control"/>
+        <KeyBinding 
+                Command="{Binding AddLineCommand}"
+                Key="W"
+                Modifiers="Control"/>
+        <KeyBinding
+            Command="{Binding DeleteCommand}"
+                Key="D"
+                Modifiers="Control"/>
 
+
+    </Window.InputBindings>
     <Window.DataContext>
         <viewModel:MainViewModel />
     </Window.DataContext>

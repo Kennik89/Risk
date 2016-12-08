@@ -7,6 +7,8 @@
              d:DesignHeight="140" d:DesignWidth="300">
 
     <Ribbon>
+
+
         <!-- Application Menu -->
         <Ribbon.ApplicationMenu>
             <RibbonApplicationMenu KeyTip="F" SmallImageSource="/Images/Settings.png">
@@ -14,13 +16,14 @@
             </RibbonApplicationMenu>
         </Ribbon.ApplicationMenu>
         <!-- 1st fane -->
+
         <RibbonTab Header="Home" KeyTip="H">
             <RibbonGroup Header="File">
                 <RibbonButton SmallImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewMapCommand}" />
                 <RibbonButton SmallImageSource="/Images/Open.png" Label="Load" KeyTip="L" Command="{Binding LoadMapCommand}"/>
                 <RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveMapCommand}"/>
             </RibbonGroup>
-            <RibbonGroup Header="Game">
+            <RibbonGroup Header="Game" KeyTip="G">
                 <RibbonButton LargeImageSource="/Images/StartGame.png" Label="Start game" KeyTip="P" Command="{Binding StartCommand}"/>
             </RibbonGroup>
         </RibbonTab>
@@ -39,5 +42,7 @@
                 <RibbonButton LargeImageSource="/Images/Delete.png" Label="Delete" KeyTip="D" Command="{Binding DeleteCommand}"/>
             </RibbonGroup>
         </RibbonTab>
+
     </Ribbon>
+    
 </UserControl>
