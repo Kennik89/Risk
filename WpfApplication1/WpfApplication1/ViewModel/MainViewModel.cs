@@ -188,8 +188,8 @@ namespace Risk.ViewModel
             Shapes = new ObservableCollection<Shape>();
             Lines = new ObservableCollection<Line>();
 
-            UndoCommand = new RelayCommand(_undoRedoController.Undo, _undoRedoController.CanUndo);
-            RedoCommand = new RelayCommand(_undoRedoController.Redo, _undoRedoController.CanRedo);
+            UndoCommand = new RelayCommand(Undo, _undoRedoController.CanUndo);
+            RedoCommand = new RelayCommand(Redo, _undoRedoController.CanRedo);
 
             AddShapeCommand = new RelayCommand(AddShape);
             AddLineCommand = new RelayCommand(AddLine);
@@ -279,6 +279,21 @@ namespace Risk.ViewModel
         private void Exit()
         {
             Application.Current.Shutdown();
+        }
+
+        private void Undo()
+        {
+            _undoRedoController.Undo();
+            selShape = selShape;//This is made to make sure a
+            //RaisePropertyChanged is called on the selected shape for the
+            //Sidepanel
+        }
+        private void Redo()
+        {
+            _undoRedoController.Redo();
+            selShape = selShape;//This is made to make sure a
+            //RaisePropertyChanged is called on the selected shape for the
+            //Sidepanel
         }
 
         private void StartMap()
