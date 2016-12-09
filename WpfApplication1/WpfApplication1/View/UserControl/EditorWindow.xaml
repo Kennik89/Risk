@@ -21,7 +21,7 @@
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type model:Shape}">
                 <Canvas>
-                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green" Cursor="Hand">
+                    <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Canvas.Top="{Binding Y}" Canvas.Left="{Binding X}" Width="{Binding Width}" Height="{Binding Height}" Fill="Green" Cursor="{Binding DataContext.desiredCursor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDown">
                                 <cmd:EventToCommand Command="{Binding DataContext.MouseDownShapeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>

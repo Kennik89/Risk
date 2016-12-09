@@ -32,6 +32,28 @@ namespace Risk.ViewModel
         private _serializer _serializer = _serializer.Instance;
         private UndoRedoController _undoRedoController = UndoRedoController.Instance;
 
+        //public Cursor desiredCursor { get; set; RaisePropertyChanged(); }
+        public Cursor _desiredCursor = Cursors.Arrow;
+        public Cursor desiredCursor
+        {
+            get { return _desiredCursor; }
+            set { _desiredCursor = value;  RaisePropertyChanged(); }
+            
+        }
+
+        public bool _isChangingSize = false;
+        public bool isChangingSize
+        {
+            get { return _isChangingSize; }
+            set
+            {
+                _isChangingSize = value; RaisePropertyChanged();
+            }
+        }
+
+        // The drag's last point.
+        private Point Lastpoint;
+
         private bool _isAddingLine;
         // Used for saving the shape that a line is drawn from, while it is being drawn.
         private Shape _addingLineFrom;
@@ -398,6 +420,8 @@ namespace Risk.ViewModel
         private void MouseUpShape(MouseButtonEventArgs e)
         {
             Console.WriteLine("MouseUpShape");
+            isChangingSize = false;
+            
             if (isDragging)
             {
                 endDrag(e);
@@ -416,10 +440,13 @@ namespace Risk.ViewModel
 
         private void MouseMoveShape(MouseEventArgs e)//If the mouse is getting moved
         {
-            if (isDragging)
+            
+
+            if (isDragging && !isChangingSize)// && desiredCursor==Cursors.Hand)
             {
-                // The Shape is gotten from the mouse event.
                 var shape = TargetShape(e);
+                selectedShape = shape;
+                // The Shape is gotten from the mouse event.
                 // The mouse position relative to the target of the mouse event.
                 var mousePosition = RelativeMousePosition(e);
 
@@ -427,10 +454,87 @@ namespace Risk.ViewModel
                 // The View (GUI) is then notified by the Shape, that its properties have changed.
                 shape.X = _initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
                 shape.Y = _initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+
+
+                
             } else if (tempLineInUse)
             {
                 tempLine.To = TargetShape(e);
             }
+
+            else if (isChangingSize)// && shape == selectedShape)
+            {
+
+                //selectedShape = TargetShape(e);
+                Point point = RelativeMousePosition(e);
+                double offset_x = point.X - Lastpoint.X;
+                double offset_y = point.Y - Lastpoint.Y;
+
+
+                // Get the rectangle's current position.
+                double new_x = selectedShape.X;
+                double new_y = selectedShape.Y;
+                double new_width = selectedShape.Width;
+                double new_height = selectedShape.Height;
+
+                // Update the rectangle.
+                switch (MouseHitType)
+                {
+                    case HitType.Body:
+                        new_x += offset_x;
+                        new_y += offset_y;
+                        break;
+                    case HitType.UL:
+                        new_x += offset_x;
+                        new_y += offset_y;
+                        new_width -= offset_x;
+                        new_height -= offset_y;
+                        break;
+                    case HitType.UR:
+                        new_y += offset_y;
+                        new_width += offset_x;
+                        new_height -= offset_y;
+                        break;
+                    case HitType.LR:
+                        new_width += offset_x;
+                        new_height += offset_y;
+                        break;
+                    case HitType.LL:
+                        new_x += offset_x;
+                        new_width -= offset_x;
+                        new_height += offset_y;
+                        break;
+                    case HitType.L:
+                        new_x += offset_x;
+                        new_width -= offset_x;
+                        break;
+                    case HitType.R:
+                        new_width += offset_x;
+                        break;
+                    case HitType.B:
+                        new_height += offset_y;
+                        break;
+                    case HitType.T:
+                        new_y += offset_y;
+                        new_height -= offset_y;
+                        break;
+                }
+
+                // Don't use negative width or height.
+                if ((new_width > 0) && (new_height > 0))
+                {
+                    // Update the rectangle.
+                    selectedShape.X = new_x;
+                    selectedShape.Y = new_y;
+                    selectedShape.Width = new_width;
+                    selectedShape.Height = new_height;
+
+                    // Save the mouse's new location.
+                    Lastpoint = point;
+                }
+            }
+
+            desiredCursor = Cursors.Arrow;
             e.Handled = true;
 
         }
@@ -439,6 +543,16 @@ namespace Risk.ViewModel
         {
             //CountryButton b = (CountryButton)sender;
             //            Canvas c = (Canvas)b.Parent;
+
+
+            MouseHitType = SetHitType(e);
+ SetMouseCursor();
+ if (MouseHitType == HitType.None) return;
+
+ Lastpoint = RelativeMousePosition(e);
+ 
+ 
+ //           desiredCursor = Cursors.Hand;
 
             // Used for adding a Line.
             Console.WriteLine("Test: MouseDownShape happened");
@@ -644,6 +758,97 @@ namespace Risk.ViewModel
             dynamic parent = VisualTreeHelper.GetParent(o);
             return parent.GetType().IsAssignableFrom(typeof(T)) ? parent : FindParentOfType<T>(parent);
         }
+        // The part of the rectangle the mouse is over.
+        private enum HitType
+        {
+            None, Body, UL, UR, LR, LL, R, L, T, B
+        };
+
+        // The part of the rectangle under the mouse.
+        HitType MouseHitType = HitType.None;
+
+        // True if a drag is in progress.
+
+
+        // Return a HitType value to indicate what is at the point.
+        private HitType SetHitType(MouseEventArgs e)
+        {
+            selectedShape = TargetShape(e);
+            Point point = RelativeMousePosition(e);
+            double left = selectedShape.X;
+            double top = selectedShape.Y;
+            double right = left + selectedShape.Width;
+            double bottom = top + selectedShape.Height;
+            if (point.X < left) return HitType.None;
+            if (point.X > right) return HitType.None;
+            if (point.Y < top) return HitType.None;
+            if (point.Y > bottom) return HitType.None;
+
+            const double GAP = 10;
+            if (point.X - left < GAP)
+            {
+                // Left edge.
+                if (point.Y - top < GAP) return HitType.UL;
+                if (bottom - point.Y < GAP) return HitType.LL;
+                return HitType.L;
+            }
+            else if (right - point.X < GAP)
+            {
+                // Right edge.
+                if (point.Y - top < GAP) return HitType.UR;
+                if (bottom - point.Y < GAP) return HitType.LR;
+                return HitType.R;
+            }
+            if (point.Y - top < GAP) return HitType.T;
+            if (bottom - point.Y < GAP) return HitType.B;
+            return HitType.Body;
+        }
+        // Set a mouse cursor appropriate for the current hit type.
+        private void SetMouseCursor()
+        {
+            // See what cursor we should display.
+            Cursor desired_cursor = Cursors.Arrow;
+            if (!isChangingSize)
+            {
+
+                switch (MouseHitType)
+                {
+                    case HitType.None:
+                        desired_cursor = Cursors.Arrow;
+                        isChangingSize = false;
+                        break;
+                    case HitType.Body:
+                        desired_cursor = Cursors.Hand;
+                        isChangingSize = false;
+                        break;
+                    case HitType.UL:
+                    case HitType.LR:
+                        desired_cursor = Cursors.SizeNWSE;
+                        isChangingSize = true;
+                        
+                        break;
+                    case HitType.LL:
+                    case HitType.UR:
+                        desired_cursor = Cursors.SizeNESW;
+                        isChangingSize = true;
+                        break;
+                    case HitType.T:
+                    case HitType.B:
+                        desired_cursor = Cursors.SizeNS;
+                        isChangingSize = true;
+                        break;
+                    case HitType.L:
+                    case HitType.R:
+                        desired_cursor = Cursors.SizeWE;
+                        isChangingSize = true;
+                        break;
+                }
+
+                // Display the desired cursor.
+                if (desiredCursor != desired_cursor) desiredCursor = desired_cursor;
+            }
+            }
+
 
 
 
