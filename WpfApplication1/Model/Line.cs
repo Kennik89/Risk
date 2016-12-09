@@ -15,6 +15,10 @@ namespace Risk.Model
         private Shape _to;
         public Shape To { get { return _to; } set { _to = value; NotifyPropertyChanged(); } }
 
+        
+        public double _isSelected = 0;
+        public double IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(); } }
+
         //DO NOT DELETE EMPTY CONSTRUCTOR
         public Line()
         {

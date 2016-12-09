@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Risk.View.UserControl"
+             xmlns:vm="clr-namespace:Risk.ViewModel"
+
              mc:Ignorable="d"
-             d:DesignWidth ="250"><!--This needs the parent to be a stackpanel-->
+             d:DataContext="{d:DesignInstance Type=vm:MainViewModel,IsDesignTimeCreatable=True}"   d:DesignWidth ="250"><!--This needs the parent to be a stackpanel-->
     <Grid Background="DimGray" Width="120">
         <StackPanel>
-            <Label>Number Country: #</Label>
-            <Separator></Separator>
             <Label>Error: None</Label>
             <Separator/>
             <Button Width="100" Height="100" BorderBrush="White" BorderThickness="5" Command="{Binding AddShapeCommand}">
@@ -24,18 +24,36 @@
                 </Button.Background>
             </Button>
 
-            <DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
-                <DataGrid.Columns>
+            <Separator Height="3" Background="Black">
+            </Separator>
+
+            <TextBlock Text="X" Margin="0,10,0,0" FontSize="12"/>
+            <TextBox Text="{Binding xselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
+            <TextBlock Text="Y" Margin="0,10,0,0" FontSize="12"/>
+            <TextBox Text="{Binding yselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}"><!--TextChanged="TextBox_TextChangedY"-->
+
+            </TextBox>
+            <TextBlock Text="Width" Margin="0,10,0,0" FontSize="12"/>
+            <TextBox Text="{Binding widthselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}">
+                
+            </TextBox>
+            <TextBlock Text="Height" Margin="0,10,0,0" FontSize="12"/>
+            <TextBox Text="{Binding heightselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}">
+
+            </TextBox>
+            <!--DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns-->
                     <!-- It is important to understand that the DataContext 'inside' the DataGrid is a 'Shape' object from the MainViewModels 'Shapes' collection, -->
                     <!--  which the DataGrid is bound to. -->
                     <!-- The DataGrids columns are bound to the properties of the current Shape. -->
-                    <DataGridTextColumn Binding="{Binding Number}" Header="Number" Width="*" IsReadOnly="True"/>
+                    <!--DataGridTextColumn Binding="{Binding Number}" Header="Number" Width="*" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding X}" Header="X" Width="*"/>
                     <DataGridTextColumn Binding="{Binding Y}" Header="Y" Width="*"/>
                     <DataGridTextColumn Binding="{Binding Width}" Header="Width" Width="*"/>
                     <DataGridTextColumn Binding="{Binding Height}" Header="Height" Width="*"/>
                 </DataGrid.Columns>
-            </DataGrid>
+            </-->
 
         </StackPanel>
     </Grid>
