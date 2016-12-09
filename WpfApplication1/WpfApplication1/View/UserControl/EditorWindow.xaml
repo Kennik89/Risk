@@ -79,6 +79,15 @@
                         <Line.Effect>
                             <DropShadowEffect Color="White" Opacity="{Binding IsSelected}" BlurRadius="10" ShadowDepth="0"/>
                         </Line.Effect>
+                        <Line.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete" Command="{Binding AddShapeCommand}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Delete.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Line.ContextMenu>
                     </Line>
                 </Canvas>
             </DataTemplate>
@@ -130,7 +139,7 @@
 
         <Canvas.ContextMenu>
             <ContextMenu>
-                <MenuItem Command="{Binding AddShapeCommand}">
+                <MenuItem Header="Add Country" Command="{Binding AddShapeCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/addLand.png" />
                     </MenuItem.Icon>

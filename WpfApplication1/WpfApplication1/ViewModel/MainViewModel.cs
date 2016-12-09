@@ -51,28 +51,40 @@ namespace Risk.ViewModel
 
         public double xselected
         {
-            get { return selectedShape.X; }
-            set { selectedShape.X = value; }
+            get { return selShape.X; }
+            set { selShape.X = value;
+                RaisePropertyChanged();
+            }
         }
         public double yselected
         {
-            get { return selectedShape.Y; }
-            set { selectedShape.Y = value; }
+            get { return selShape.Y; }
+            set { selShape.Y = value;
+                RaisePropertyChanged();
+            }
         }
         public double widthselected
         {
-            get { return selectedShape.Width; }
-            set { selectedShape.Width = value; }
+            get { return selShape.Width; }
+            set { selShape.Width = value;
+                RaisePropertyChanged();
+            }
         }
         public double heightselected
         {
-            get { return selectedShape.Height; }
-            set { selectedShape.Height = value; }
+            get { return selShape.Height; }
+            set { selShape.Height = value;
+                RaisePropertyChanged();
+            }
         }
         public Shape selShape
         {
             get { return selectedShape; }
             set { selectedShape = value;
+                heightselected = selectedShape.Height;
+                heightselected = selectedShape.Width;
+                heightselected = selectedShape.X;
+                heightselected = selectedShape.Y;
                 RaisePropertyChanged();
             }
         }

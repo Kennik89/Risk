@@ -28,18 +28,18 @@
             </Separator>
 
             <TextBlock Text="X" Margin="0,10,0,0" FontSize="12"/>
-            <TextBox Text="{Binding selShape.X, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChangedX">
+            <TextBox Text="{Binding xselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
             <TextBlock Text="Y" Margin="0,10,0,0" FontSize="12"/>
-            <TextBox Text="{Binding selShape.Y, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChangedY">
+            <TextBox Text="{Binding yselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}"><!--TextChanged="TextBox_TextChangedY"-->
 
             </TextBox>
             <TextBlock Text="Width" Margin="0,10,0,0" FontSize="12"/>
-            <TextBox Text="{Binding selShape.Width, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChangedWidth">
+            <TextBox Text="{Binding widthselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}">
                 
             </TextBox>
             <TextBlock Text="Height" Margin="0,10,0,0" FontSize="12"/>
-            <TextBox Text="{Binding selShape.Height, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChangedHeight">
+            <TextBox Text="{Binding heightselected, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding isDataEditable, UpdateSourceTrigger=PropertyChanged}">
 
             </TextBox>
             <!--DataGrid x:Name="shapesControl" Height="140" ItemsSource="{Binding Shapes}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
