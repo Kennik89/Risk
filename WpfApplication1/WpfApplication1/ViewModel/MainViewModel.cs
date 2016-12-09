@@ -144,6 +144,15 @@ namespace Risk.ViewModel
         public ICommand UndoCommand { get; }
         public ICommand RedoCommand { get; }
 
+        /*  Right Click Commands */
+        public ICommand AddShapeOnCanvasCommand { get; }
+        public ICommand AddShapeWithLineCanvasCommand { get; }
+        public ICommand DeleteLineCommand { get; }
+        public ICommand DeleteShapeCommand { get; }
+        public ICommand AddLineToShapeCommand { get; }
+
+
+
         /*  MAP FUNCTIONALITIES */
         public ICommand AddShapeCommand { get; }
         public ICommand AddLineCommand { get; }
@@ -216,8 +225,15 @@ namespace Risk.ViewModel
             CopyCommand = new RelayCommand(Copy);
             PasteCommand = new RelayCommand(Paste);
 
-            //Sets the selected shape
-            selectedShape = dummyShape;
+            AddShapeOnCanvasCommand = new RelayCommand(AddShapeOnCanvas);
+            AddShapeWithLineCanvasCommand = new RelayCommand(AddShapeWithLineCanvas);
+            DeleteLineCommand = new RelayCommand(DeleteLine);
+            DeleteShapeCommand = new RelayCommand(DeleteShape);
+            AddLineToShapeCommand = new RelayCommand(AddLineToShape);
+
+
+        //Sets the selected shape
+        selectedShape = dummyShape;
             //Assigns the temporary line
 
             TempLines = new ObservableCollection<Line>();
@@ -627,6 +643,29 @@ namespace Risk.ViewModel
         {
             dynamic parent = VisualTreeHelper.GetParent(o);
             return parent.GetType().IsAssignableFrom(typeof(T)) ? parent : FindParentOfType<T>(parent);
+        }
+
+
+
+        private void AddShapeOnCanvas()
+        {
+
+        }
+        private void AddShapeWithLineCanvas()
+        {
+
+        }
+         private void DeleteLine()
+        {
+
+        }
+        private void DeleteShape()
+        {
+
+        }
+        private void AddLineToShape()
+        {
+
         }
 
     }
