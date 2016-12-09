@@ -36,8 +36,46 @@ namespace Risk.ViewModel
         // Used for saving the shape that a line is drawn from, while it is being drawn.
         private Shape _addingLineFrom;
 
+        public bool _isDataEditable = false;
+        public bool isDataEditable
+        {
+            get { return _isDataEditable; }
+            set { _isDataEditable = value; RaisePropertyChanged();
+            }
+        }
+
         //Used when no shape is selected. Thus, when no shape is selected, this is used.
         private Shape dummyShape = new Shape(0, 0, 0, 0);
+
+        private Shape standardRefShape = new Shape(0, 0, 0, 0);
+
+        public double xselected
+        {
+            get { return selectedShape.X; }
+            set { selectedShape.X = value; }
+        }
+        public double yselected
+        {
+            get { return selectedShape.Y; }
+            set { selectedShape.Y = value; }
+        }
+        public double widthselected
+        {
+            get { return selectedShape.Width; }
+            set { selectedShape.Width = value; }
+        }
+        public double heightselected
+        {
+            get { return selectedShape.Height; }
+            set { selectedShape.Height = value; }
+        }
+        public Shape selShape
+        {
+            get { return selectedShape; }
+            set { selectedShape = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private Shape tempLineShape = new Shape(0,0,0,0);
         //For templine: To will always be tempLineShape, placed to follow the mouse
@@ -53,7 +91,7 @@ namespace Risk.ViewModel
         private bool isDragging = false;
         private bool isMarked = false;//Indicates if something is marked
         private bool isMarkedShape = false;//Indicates if it is a shape or a line that's marked (For data in the side)
-        private Shape selectedShape;//A marked shape
+        public Shape selectedShape;//A marked shape
         private Line selectedLine;//A marked Line
         //private Shape _selectedObject;
 //        private Shape _selectedShape;
@@ -68,6 +106,10 @@ namespace Risk.ViewModel
         public ICommand AddShapeCommand { get; }
         public ICommand AddLineCommand { get; }
         public ICommand DeleteCommand { get; }
+
+        /*  FUNCTIONALITY FROM CONTEXTMENU */
+        public ICommand AddShapeFromContextCommand { get; }
+        public ICommand AddLineFromContextCommand { get; }
 
         /*  MOUSE CONTROLLER    */
         public ICommand MouseDownShapeCommand { get; }
@@ -229,6 +271,7 @@ namespace Risk.ViewModel
         {
             _isAddingLine = true;
             RaisePropertyChanged(() => ModeOpacity);
+            isDataEditable = false;
         }
 
         private void AddShape()
@@ -288,11 +331,12 @@ namespace Risk.ViewModel
                 isMarkedShape = true;//Indicates that the marked object is a Shape
                 isMarked = true;//Indicates that something is marked
                                 //removes glow from previous
+                isDataEditable = true;
                 removeOldGlow();
                 //Selects shape
-                selectedShape = TargetShape(e);
+                selShape = TargetShape(e);
                 //Sets glow on current
-                selectedShape.IsSelected = 1;
+                selShape.IsSelected = 1;
             }
             e.Handled = true;
         }
@@ -344,9 +388,10 @@ namespace Risk.ViewModel
             {
                 selectedLine.IsSelected = 0;
             }
-            if (selectedShape != null)
+            if (selShape != null)
             {
-                selectedShape.IsSelected = 0;
+                selShape.IsSelected = 0;
+                selShape = dummyShape;
             }
         }
 
@@ -357,6 +402,8 @@ namespace Risk.ViewModel
 
             isMarkedShape = false;//Indicates that the marked object is not a shape (it is then a line)
             isMarked = true;//Indicates that something is marked
+            isDataEditable = false;
+
 
             //Selects new line.
             selectedLine = TargetLine(e);
@@ -393,14 +440,17 @@ namespace Risk.ViewModel
             //Removes glow from other lines
             removeOldGlow();
             isMarked = false;
-            e.Handled = true;
+            //e.Handled = true;
+            isDataEditable = false;
+
+
 
         }
         private void MouseUpCanvas(MouseButtonEventArgs e)
         {
             Console.WriteLine("MouseUpCanvas");
             e.MouseDevice.Target.ReleaseMouseCapture();
-            e.Handled = true;
+            //e.Handled = true;
 
         }
         private void MouseMoveCanvas(MouseEventArgs e)
@@ -457,6 +507,8 @@ namespace Risk.ViewModel
                     tempLine.To = tempLineShape;
                     //Marks that the temporary line isn't in use.
                     tempLineInUse = false;
+
+                    if (isMarked && isMarkedShape) { isDataEditable = true; }
                 }
             }
         }

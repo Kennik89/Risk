@@ -127,6 +127,16 @@
                 <cmd:EventToCommand Command="{Binding DataContext.MouseUpCanvasCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
+
+        <Canvas.ContextMenu>
+            <ContextMenu>
+                <MenuItem Command="{Binding AddShapeCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/addLand.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Canvas.ContextMenu>
         <!-- </ContentPresenter>-->
 
 
