@@ -43,6 +43,7 @@ namespace Risk.Command
             var command = undoStack.Pop();
             redoStack.Push(command);
             command.UnExecute();
+
         }
 
        public bool CanRedo() => redoStack.Any();

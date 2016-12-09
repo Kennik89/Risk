@@ -52,28 +52,58 @@ namespace Risk.ViewModel
         public double xselected
         {
             get { return selShape.X; }
-            set { selShape.X = value;
+            set
+            {
+                double xstart = selShape.X;
+                double dx = value - xstart;
+                if (!(dx < 0.0001 && dx > -0.0001) )//Floating point arithmetics
+                {
+                    _undoRedoController.AddAndExecute(new EditShapeCommand(selShape, dx, 0, 0, 0));
+                }
                 RaisePropertyChanged();
             }
         }
         public double yselected
         {
             get { return selShape.Y; }
-            set { selShape.Y = value;
+            set
+            {
+                double ystart = selShape.Y;
+                double dy = value - ystart;
+                if (!(dy < 0.0001 && dy > -0.0001))//Floating point arithmetics
+                {
+                    _undoRedoController.AddAndExecute(new EditShapeCommand(selShape, 0, dy, 0, 0));
+                }
                 RaisePropertyChanged();
+
             }
         }
         public double widthselected
         {
             get { return selShape.Width; }
-            set { selShape.Width = value;
+            set
+            {
+                double widthstart = selShape.Width;
+                double dwidth = value - widthstart;
+                if (!(dwidth < 0.0001 && dwidth > -0.0001))//Floating point arithmetics
+                {
+                    _undoRedoController.AddAndExecute(new EditShapeCommand(selShape, 0, 0, dwidth, 0));
+                }
                 RaisePropertyChanged();
+
             }
         }
         public double heightselected
         {
             get { return selShape.Height; }
-            set { selShape.Height = value;
+            set
+            {
+                double heightstart = selShape.Height;
+                double dheight = value - heightstart;
+                if (!(dheight < 0.0001 && dheight > -0.0001))//Floating point arithmetics
+                {
+                    _undoRedoController.AddAndExecute(new EditShapeCommand(selShape, 0, 0, 0, dheight));
+                }
                 RaisePropertyChanged();
             }
         }
@@ -82,9 +112,9 @@ namespace Risk.ViewModel
             get { return selectedShape; }
             set { selectedShape = value;
                 heightselected = selectedShape.Height;
-                heightselected = selectedShape.Width;
-                heightselected = selectedShape.X;
-                heightselected = selectedShape.Y;
+                widthselected = selectedShape.Width;
+                xselected = selectedShape.X;
+                yselected = selectedShape.Y;
                 RaisePropertyChanged();
             }
         }

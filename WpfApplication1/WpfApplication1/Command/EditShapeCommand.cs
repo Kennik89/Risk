@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Risk.Command
 {
-    class EditShapeCommand
+    class EditShapeCommand : IUndoRedoCommand
     {
         private Shape shape;
         private double dx;
@@ -28,12 +28,17 @@ namespace Risk.Command
         {
             shape.X += dx;
             shape.Y += dy;
+            shape.Width += dwidth;
+            shape.Height += dheight;
         }
 
         public void UnExecute()
         {
             shape.X -= dx;
             shape.Y -= dy;
+            shape.Width -= dwidth;
+            shape.Height -= dheight;
+            //RaisePropertyChanged();
         }
     }
 }
