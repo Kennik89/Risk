@@ -70,6 +70,12 @@ namespace Risk.Model
         }
 
         public double CenterX => Width / 2;
+
+        public void notify()
+        {
+            NotifyPropertyChanged();
+        }
+
         public double CenterY => Height / 2;
 
 
