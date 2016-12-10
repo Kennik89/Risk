@@ -518,6 +518,10 @@ namespace Risk.ViewModel
 
         private void RemoveOldGlow()
         {
+            foreach(Shape s in Shapes)
+            {
+                s.IsSelected = 0;
+            }
             if (selectedLine != null)
             {
                 selectedLine.IsSelected = 0;
