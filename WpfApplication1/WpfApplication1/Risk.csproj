@@ -90,7 +90,6 @@
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="LoadSave\Serializer.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\Country\CountryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -111,10 +110,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\DummyUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,9 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\DummyUserControl.xaml.cs">
-      <DependentUpon>DummyUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -169,50 +161,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Sea.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Add.png" />
-    <Resource Include="Images\Cancel.png" />
-    <Resource Include="Images\Check.png" />
     <Resource Include="Images\Copy.png" />
-    <Resource Include="Images\Cut.png" />
     <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\Edit.png" />
     <Resource Include="Images\Exit.png" />
-    <Resource Include="Images\Find.png" />
-    <Resource Include="Images\Help.png" />
-    <Resource Include="Images\Information.png" />
     <Resource Include="Images\New.png" />
     <Resource Include="Images\Open.png" />
-    <Resource Include="Images\Options.png" />
     <Resource Include="Images\Paste.png" />
-    <Resource Include="Images\Picture.png" />
-    <Resource Include="Images\Preview.png" />
-    <Resource Include="Images\Print.png" />
     <Resource Include="Images\Redo.png" />
-    <Resource Include="Images\Remove.png" />
-    <Resource Include="Images\Rename.png" />
     <Resource Include="Images\Save.png" />
-    <Resource Include="Images\Search.png" />
     <Resource Include="Images\Settings.png" />
     <Resource Include="Images\Undo.png" />
-    <Resource Include="Images\Zoom-In.png" />
-    <Resource Include="Images\Zoom-Out.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\StartGame.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\addLand.png" />
     <Resource Include="Images\addLine.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\RiskMapDummy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\Line\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{260d4a84-9321-4440-af37-fc8344c15ff5}</Project>
