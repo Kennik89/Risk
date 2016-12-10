@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Risk.Model
+namespace Model
 {
     public class Map
     {
-        public List<Shape> countries { get; set; }
-        public List<serialLine> connections { get; set; }
+        public List<Shape> Countries { get; set; }
+        public List<serialLine> Connections { get; set; }
 
         public Map()
         {
-            countries = new List<Shape>();
-            connections = new List<serialLine>();
+            Countries = new List<Shape>();
+            Connections = new List<serialLine>();
         }
     }
 }

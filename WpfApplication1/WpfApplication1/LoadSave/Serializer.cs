@@ -7,30 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Risk.Model;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
+using Model;
 
 namespace Risk.LoadSave
 {
-    public class _serializer
+    public class Serializer
     {
-        public static _serializer Instance { get; } = new _serializer();
+        public static Serializer Instance { get; } = new Serializer();
 
         [STAThread]
         public void Save(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines)
         {
-            /*
-             * System.Threading.Thread.Sleep(5000);
-            Console.WriteLine("Save-thread is running");
-            */
-            //https://msdn.microsoft.com/en-us/library/ms752244(v=vs.110).aspx
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            saveFileDialog.Title = "Save Map";
-            saveFileDialog.Filter = "Risk files (.risk)|*.risk";
-            saveFileDialog.DefaultExt = "risk";
-            saveFileDialog.AddExtension = true;
+            //https://msdn.microsoft.com/en-us/library/ms752244(v=vs.110).aspx about DataContract
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "Save Map",
+                Filter = "Risk files (.risk)|*.risk",
+                DefaultExt = "risk",
+                AddExtension = true
+            };
+
             saveFileDialog.ShowDialog();
 
             if (saveFileDialog.FileName.Length == 0)
@@ -43,8 +42,6 @@ namespace Risk.LoadSave
             //Serialize the Record object to a memory stream using DataContractSerializer.
             DataContractSerializer serializer = new DataContractSerializer(typeof(Map));
 
-            //Maybe make all this until writing in a different thread since savefiledialog may block?
-
             //Create a Map object with lines and shapes
             Map m = new Map();
 
@@ -54,9 +51,8 @@ namespace Risk.LoadSave
 
                 foreach (Shape shape in shapes)
                 {
-                    m.countries.Add(shape);
+                    m.Countries.Add(shape);
                 }
-                //Console.Write("Teest");
 
             }
 
@@ -65,7 +61,7 @@ namespace Risk.LoadSave
             {
                 foreach (Line line in lines)
                 {
-                    m.connections.Add(new serialLine(line));
+                    m.Connections.Add(new serialLine(line));
                 }
             }
 
@@ -81,7 +77,6 @@ namespace Risk.LoadSave
         {
             //http://stackoverflow.com/questions/16943176/how-to-deserialize-xml-using-datacontractserializer
             //Define a map
-            Map m;
 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = false;
@@ -105,17 +100,17 @@ namespace Risk.LoadSave
             XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
             
             //Actual reading and assigning to map
-            m = (Map) dcs.ReadObject (reader);
+            var m = (Map) dcs.ReadObject (reader);
             //Close readers
             reader.Close();
             fs.Close();
 
-            foreach (Shape shape in m.countries)
+            foreach (Shape shape in m.Countries)
             {
                 shapes.Add(shape);
             }
 
-            foreach (serialLine line in m.connections)
+            foreach (serialLine line in m.Connections)
             {
                 lines.Add(new Line(line, shapes));
             }

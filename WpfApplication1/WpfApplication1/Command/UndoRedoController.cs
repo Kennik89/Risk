@@ -10,8 +10,8 @@ namespace Risk.Command
     {
         #region Fields
 
-        private readonly Stack<IUndoRedoCommand> undoStack = new Stack<IUndoRedoCommand>();
-        private readonly Stack<IUndoRedoCommand> redoStack = new Stack<IUndoRedoCommand>();
+        private readonly Stack<IUndoRedoCommand> _undoStack = new Stack<IUndoRedoCommand>();
+        private readonly Stack<IUndoRedoCommand> _redoStack = new Stack<IUndoRedoCommand>();
 
         #endregion
 
@@ -30,38 +30,37 @@ namespace Risk.Command
         #region Methods
         public void AddAndExecute(IUndoRedoCommand command)
         {
-            undoStack.Push(command);
-            redoStack.Clear();
+            _undoStack.Push(command);
+            _redoStack.Clear();
             command.Execute();
         }
 
-        public bool CanUndo() => undoStack.Any();
+        public bool CanUndo() => _undoStack.Any();
 
         public void Undo()
         {
-            if (!undoStack.Any()) throw new InvalidOperationException();
-            var command = undoStack.Pop();
-            redoStack.Push(command);
+            if (!_undoStack.Any()) throw new InvalidOperationException();
+            var command = _undoStack.Pop();
+            _redoStack.Push(command);
             command.UnExecute();
+
         }
 
-       public bool CanRedo() => redoStack.Any();
-
+        public bool CanRedo() => _redoStack.Any();
 
         public void Redo()
         {
-            if (!redoStack.Any()) throw new InvalidOperationException();
-            var command = redoStack.Pop();
-            undoStack.Push(command);
+            if (!_redoStack.Any()) throw new InvalidOperationException();
+            var command = _redoStack.Pop();
+            _undoStack.Push(command);
             command.Execute();
         }
 
         public void Clear()
         {
-            undoStack.Clear();
-            redoStack.Clear();
+            _undoStack.Clear();
+            _redoStack.Clear();
         }
         #endregion
-
     }
 }

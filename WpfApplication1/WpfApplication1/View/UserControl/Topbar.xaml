@@ -19,22 +19,22 @@
 
         <RibbonTab Header="Home" KeyTip="H">
             <RibbonGroup Header="File">
-                <RibbonButton SmallImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewMapCommand}" />
-                <RibbonButton SmallImageSource="/Images/Open.png" Label="Load" KeyTip="L" Command="{Binding LoadMapCommand}"/>
-                <RibbonButton SmallImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveMapCommand}"/>
+                <RibbonButton LargeImageSource="/Images/New.png" Label="New" KeyTip="N" Command="{Binding NewMapCommand}" />
+                <RibbonButton LargeImageSource="/Images/Open.png" Label="Load" KeyTip="L" Command="{Binding LoadMapCommand}"/>
+                <RibbonButton LargeImageSource="/Images/Save.png" Label="Save" KeyTip="S" Command="{Binding SaveMapCommand}"/>
             </RibbonGroup>
-            <RibbonGroup Header="Game" KeyTip="G">
-                <RibbonButton LargeImageSource="/Images/StartGame.png" Label="Start game" KeyTip="P" Command="{Binding StartCommand}"/>
-            </RibbonGroup>
+            <!-- RibbonGroup Header="Game">
+                <RibbonButton LargeImageSource="/Images/StartGame.png" Label="Save" KeyTip="S" Command="{Binding StartGameCommand}"/>
+            </ -->
         </RibbonTab>
         <!-- 2nd fane -->
         <RibbonTab Header="Editor" KeyTip="E">
             <RibbonGroup Header="Edit">
                 <RibbonButton LargeImageSource="/Images/Undo.png" Label="Undo" KeyTip="Z" Command="{Binding UndoCommand}" />
                 <RibbonButton LargeImageSource="/Images/Redo.png" Label="Redo" KeyTip="Y" Command="{Binding RedoCommand}" />
-                <RibbonButton SmallImageSource="/Images/Cut.png" Label="Cut" KeyTip="X" Command="{Binding CutCommand}" />
-                <RibbonButton SmallImageSource="/Images/Copy.png" Label="Copy" KeyTip="C" Command="{Binding CopyCommand}"/>
-                <RibbonButton SmallImageSource="/Images/Paste.png" Label="Paste" KeyTip="V" Command="{Binding PasteCommand}" />
+                <!-- RibbonButton LargeImageSource="/Images/Cut.png" Label="Copy" KeyTip="C" Command="{Binding CutCommand}"/ -->
+                <RibbonButton LargeImageSource="/Images/Copy.png" Label="Copy" KeyTip="C" Command="{Binding CopyCommand}"/>
+                <RibbonButton LargeImageSource="/Images/Paste.png" Label="Paste" KeyTip="V" Command="{Binding PasteCommand}" />
             </RibbonGroup>
             <RibbonGroup Header="Elements">
                 <RibbonButton LargeImageSource="/Images/addLand.png" Label="Add Country" KeyTip="Q" Command="{Binding AddShapeCommand}"/>
@@ -42,7 +42,5 @@
                 <RibbonButton LargeImageSource="/Images/Delete.png" Label="Delete" KeyTip="D" Command="{Binding DeleteCommand}"/>
             </RibbonGroup>
         </RibbonTab>
-
     </Ribbon>
-    
 </UserControl>
