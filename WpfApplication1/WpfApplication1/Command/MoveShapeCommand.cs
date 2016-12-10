@@ -1,35 +1,35 @@
-﻿using Risk.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model;
 
 namespace Risk.Command
 {
     class MoveShapeCommand : IUndoRedoCommand
     {
-        private Shape shape;
-        private double dx;
-        private double dy;
+        private Shape _shape;
+        private double _dx;
+        private double _dy;
 
-        public MoveShapeCommand(Shape _shape, double _dx, double _dy)
+        public MoveShapeCommand(Shape shape, double dx, double dy)
         {
-            shape = _shape;
-            dx = _dx;
-            dy = _dy;
+            _shape = shape;
+            _dx = dx;
+            _dy = dy;
         }
 
         public void Execute()
         {
-            shape.X += dx;
-            shape.Y += dy;
+            _shape.X += _dx;
+            _shape.Y += _dy;
         }
 
         public void UnExecute()
         {
-            shape.X -= dx;
-            shape.Y -= dy;
+            _shape.X -= _dx;
+            _shape.Y -= _dy;
         }
 
     }

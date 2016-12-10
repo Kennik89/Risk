@@ -1,33 +1,30 @@
-﻿using Risk.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using Model;
 
 namespace Risk.Command
 {
     public class AddShapeCommand : IUndoRedoCommand
     {
         
-        private ObservableCollection<Shape> shapes;
+        private ObservableCollection<Shape> _shapes;
         
-        private Shape shape;
+        private Shape _shape;
         
-        public AddShapeCommand(ObservableCollection<Shape> _shapes, Shape _shape)
+        public AddShapeCommand(ObservableCollection<Shape> shapes, Shape shape)
         {
-            shapes = _shapes;
-            shape = _shape;
+            _shapes = shapes;
+            _shape = shape;
         }
 
+        // For Undo
         public void Execute()
         {
-            shapes.Add(shape);
+            _shapes.Add(_shape);
         }
+        // For Redo
         public void UnExecute()
         {
-            shapes.Remove(shape);
+            _shapes.Remove(_shape);
         }
 
     }

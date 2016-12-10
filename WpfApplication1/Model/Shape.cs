@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Xml;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 
-namespace Risk.Model
+namespace Model
 {
     [DataContract]
     [KnownType(typeof(NotifyBase))]
@@ -22,7 +14,7 @@ namespace Risk.Model
         private static int _counter = 0;
 
         [DataMember]
-        public int UID { get; set; }//A setter is necessary for the serializer to work
+        public int Uid { get; set; }//A setter is necessary for the serializer to work
 
         [DataMember]
         private double _x = _rand.Next(0, 700);
@@ -71,13 +63,12 @@ namespace Risk.Model
 
         public double CenterX => Width / 2;
 
-        public void notify()
+        public void Notify()
         {
             NotifyPropertyChanged();
         }
 
         public double CenterY => Height / 2;
-
 
         //This indicates whether it is marked or not. This has to be a double,
         //Since it binds to the wpf, where opacity for the "glow" is either 1
@@ -85,10 +76,9 @@ namespace Risk.Model
         private double _isSelected = 0;
         public double IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(); } }
 
-
         public Shape(double posX, double posY, double posHeight, double posWidth)
         {
-            UID = ++_counter;
+            Uid = ++_counter;
             this.X = posX;
             this.Y = posY;
             this.Height = posHeight;
@@ -97,9 +87,9 @@ namespace Risk.Model
 
         public Shape()
         {
-            UID = ++_counter;
+            Uid = ++_counter;
         }
 
-        public override string ToString() => UID.ToString();
+        public override string ToString() => Uid.ToString();
     }
 }

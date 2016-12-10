@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Risk.Model
+namespace Model
 {
     public class Line : NotifyBase
     {
@@ -14,12 +10,11 @@ namespace Risk.Model
 
         private Shape _to;
         public Shape To { get { return _to; } set { _to = value; NotifyPropertyChanged(); } }
-
         
         public double _isSelected = 0;
         public double IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(); } }
 
-        //DO NOT DELETE EMPTY CONSTRUCTOR
+        //Empty constructor is needed for serialization.
         public Line()
         {
 
@@ -34,11 +29,11 @@ namespace Risk.Model
             //Finding the right shapes
             foreach (Shape s in shapes)
             {
-                if (l.IDfrom == s.UID)
+                if (l.IDfrom == s.Uid)
                 {
                     _from = s;
                     toFound = true;
-                } else if (l.IDto == s.UID)
+                } else if (l.IDto == s.Uid)
                 {
                     _to = s;
                     fromFound = true;
@@ -69,9 +64,8 @@ namespace Risk.Model
 
         public serialLine(Line line)
         {
-            IDfrom = line.From.UID;
-            IDto = line.To.UID;
+            IDfrom = line.From.Uid;
+            IDto = line.To.Uid;
         }
     }
-
 }

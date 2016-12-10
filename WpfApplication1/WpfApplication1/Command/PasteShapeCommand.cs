@@ -1,10 +1,10 @@
-﻿using Risk.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model;
 
 namespace Risk.Command
 {
@@ -18,12 +18,6 @@ namespace Risk.Command
         private List<Shape> _connectedShapes;
         private List<Line> _oldLines;
         private List<Line> _newLines;
-
-        /*        public PasteShapeCommand(ObservableCollection<Shape> shapes, List<Shape> shape)
-                {
-                    _shapes = shapes;
-                    _oldShapes = shape;
-                }*/
 
         public PasteShapeCommand(ObservableCollection<Shape> shapes, ObservableCollection<Line> lines, Shape oldShape, Shape newShape)
         {
@@ -39,7 +33,7 @@ namespace Risk.Command
         {
             _connectedShapes = new List<Shape>();
             _oldLines = new List<Line>();
-            _oldLines = _lines.Where(x => _oldShape.UID == x.From.UID || _oldShape.UID == x.To.UID).ToList();
+            _oldLines = _lines.Where(x => _oldShape.Uid == x.From.Uid || _oldShape.Uid == x.To.Uid).ToList();
 
             foreach (var l in _oldLines)
             {

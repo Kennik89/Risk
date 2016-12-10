@@ -8,9 +8,7 @@ namespace Risk.Command
 {
     public interface IUndoRedoCommand
     {
-
         void Execute();
         void UnExecute();
-
     }
 }

@@ -1,44 +1,43 @@
-﻿using Risk.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model;
 
 namespace Risk.Command
 {
     class EditShapeCommand : IUndoRedoCommand
     {
-        private Shape shape;
-        private double dx;
-        private double dy;
-        private double dwidth;
-        private double dheight;
+        private Shape _shape;
+        private double _dx;
+        private double _dy;
+        private double _dwidth;
+        private double _dheight;
 
-        public EditShapeCommand(Shape _shape, double _dx, double _dy, double _dwidth, double _dheight)
+        public EditShapeCommand(Shape shape, double dx, double dy, double dwidth, double dheight)
         {
-            shape = _shape;
-            dx = _dx;
-            dy = _dy;
-            dwidth = _dwidth;
-            dheight = _dheight;
+            _shape = shape;
+            _dx = dx;
+            _dy = dy;
+            _dwidth = dwidth;
+            _dheight = dheight;
         }
 
         public void Execute()
         {
-            shape.X += dx;
-            shape.Y += dy;
-            shape.Width += dwidth;
-            shape.Height += dheight;
+            _shape.X += _dx;
+            _shape.Y += _dy;
+            _shape.Width += _dwidth;
+            _shape.Height += _dheight;
         }
 
         public void UnExecute()
         {
-            shape.X -= dx;
-            shape.Y -= dy;
-            shape.Width -= dwidth;
-            shape.Height -= dheight;
-            //RaisePropertyChanged();
+            _shape.X -= _dx;
+            _shape.Y -= _dy;
+            _shape.Width -= _dwidth;
+            _shape.Height -= _dheight;
         }
     }
 }

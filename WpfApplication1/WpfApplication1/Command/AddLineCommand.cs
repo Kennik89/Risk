@@ -1,10 +1,9 @@
-﻿
-using Risk.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model;
 
 namespace Risk.Command
 {
@@ -12,35 +11,32 @@ namespace Risk.Command
     {
         #region Fields
 
-
-        private System.Collections.ObjectModel.ObservableCollection<Line> lines;
-        private Line line;
+        private System.Collections.ObjectModel.ObservableCollection<Line> _lines;
+        private Line _line;
 
         #endregion
 
         #region Constructor
 
-        // For changing the current state of the diagram.
-        public AddLineCommand(System.Collections.ObjectModel.ObservableCollection<Line> _lines, Line _line)
+        public AddLineCommand(System.Collections.ObjectModel.ObservableCollection<Line> lines, Line line)
         {
-            lines = _lines;
-            line = _line;
+            _lines = lines;
+            _line = line;
         }
-
         #endregion
 
         #region Methods
 
-        // For doing and redoing the command.
+        // For Undo.
         public void Execute()
         {
-            lines.Add(line);
+            _lines.Add(_line);
         }
 
-        // For undoing the command.
+        // For Redo.
         public void UnExecute()
         {
-            lines.Remove(line);
+            _lines.Remove(_line);
         }
 
         #endregion

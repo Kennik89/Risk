@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Interactivity;
 using System.Windows.Shapes;
+using Shape = Model.Shape;
 
 namespace Risk.View.UserControl
 {
@@ -67,7 +68,7 @@ namespace Risk.View.UserControl
         Binding xBind = new Binding("X");
         Binding yBind = new Binding("Y");
         private Point grabOffset;
-        private Risk.Model.Shape target = null;
+        private Shape target = null;
         private bool isDragging = false;
         public CountryButton()
         {
@@ -86,7 +87,7 @@ namespace Risk.View.UserControl
     {
             //Reads from e and changes the data context.
             //Should work, MSDN.
-            target = (Risk.Model.Shape) e.NewValue;
+            target = (Shape) e.NewValue;
 
             X = target.X;
             Y = target.Y;
