@@ -139,7 +139,7 @@
 
         <Canvas.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Add Country" Command="{Binding AddShapeOnCanvasCommand}">
+                <MenuItem Header="Add Country" Command="{Binding AddShapeCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/addLand.png" />
                     </MenuItem.Icon>
