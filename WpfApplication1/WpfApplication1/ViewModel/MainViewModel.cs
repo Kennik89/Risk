@@ -342,7 +342,7 @@ namespace Risk.ViewModel
         private void Cut()
         {
             throw new NotImplementedException();
-        }      // Not implemented yet
+        }    
 
         private void Copy()
         {
@@ -354,13 +354,8 @@ namespace Risk.ViewModel
 
         private void Paste()
         {
-          
-            //_holdingLines = Lines.Where(x => _holdingShape.Any(y => y.UID == x.From.UID || y.UID == x.To.UID)).ToList(); // List<Shape>
-            //_undoRedoController.AddAndExecute(new PasteCommand(Shapes, new Shape()));
-
-            //MouseDownShapeCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownShape);
             _undoRedoController.AddAndExecute(new PasteShapeCommand(Shapes, Lines, _holdingShape, new Shape()));
-        }    // Not implemented yet
+        }
 
         private void AddLine()
         {
